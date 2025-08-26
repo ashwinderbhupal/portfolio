@@ -1,16 +1,175 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Fonts: Teko (for your name) + Playfair for optional subtitle -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ashwinder Bhupal</title>
 
-    <!-- ✅ Use your SVG logo as favicon -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/Static/logo.svg" />
+
+    <!-- Critical CSS (intro + app cross-fade) -->
+    <style>
+      /* Host app cross-fade */
+      .app-viewport{
+        opacity:0;
+        transition:opacity .8s ease;            /* sync with FADE_DURATION */
+        min-height:100vh; min-height:100dvh;    /* mobile-safe height */
+      }
+      .app-viewport.visible{ opacity:1; }
+
+      /* Intro overlay */
+      .intro-screen{
+        position:fixed; inset:0; background:#000;
+        display:grid; place-items:center;
+        z-index:10000; opacity:1; transition:opacity .8s ease;
+      }
+      .intro-screen.fade-out{ opacity:0; }
+      .intro-content{ text-align:center; }
+
+      /* Logo (soft white edge glow) */
+      .intro-logo-wrap{ position:relative; display:inline-block; margin-bottom:14px; }
+      .intro-logo{
+        width:200px; height:auto; opacity:0; transition:opacity 600ms ease;
+        filter:
+          drop-shadow(0 0 10px rgba(255,255,255,.85))
+          drop-shadow(0 0 22px rgba(255,255,255,.55));
+      }
+      .intro-screen.active .intro-logo{
+        opacity:1;
+        animation:logoGlow 3s ease-in-out infinite;
+      }
+      @keyframes logoGlow{
+        0%,100%{
+          filter:
+            drop-shadow(0 0 10px rgba(255,255,255,.8))
+            drop-shadow(0 0 20px rgba(255,255,255,.5));
+        }
+        50%{
+          filter:
+            drop-shadow(0 0 18px rgba(255,255,255,1))
+            drop-shadow(0 0 36px rgba(255,255,255,.7));
+        }
+      }
+
+      /* Your name (premium block look) */
+      .intro-text{
+        margin-top:8px; opacity:0; transform:translateY(10px);
+        transition:opacity 700ms ease 250ms, transform 700ms ease 250ms;
+      }
+      .intro-screen.active .intro-text{ opacity:1; transform:translateY(0); }
+
+      .intro-title{
+        font-family:"Teko", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        font-weight:600;
+        letter-spacing:.06em;
+        font-size:clamp(1.8rem, 4.5vw, 2.8rem);
+        color:#fff;
+        text-transform:uppercase;
+        line-height:1;
+      }
+
+      /* Kill any old/rainbow loader remnants if your larger CSS is still present */
+      .loading-screen,
+      .loading-content,
+      .loading-logo,
+      .loading-text,
+      .loading-bar,
+      .loading-progress{
+        display:none!important; visibility:hidden!important; pointer-events:none!important;
+        animation:none!important; opacity:0!important; z-index:-1!important;
+      }
+      :root{
+        --gradient-rainbow: linear-gradient(0deg, rgba(0,0,0,0), rgba(0,0,0,0)) !important;
+      }
+      .loading-content::before,
+      .image-placeholder::before,
+      .project-image::before,
+      .experience-header-new::before,
+      .contact-hero::before,
+      .about-hero::before{
+        background:none!important; animation:none!important; opacity:0!important;
+      }
+
+      /* Respect reduced motion */
+      @media (prefers-reduced-motion: reduce){
+        .intro-logo{ animation:none!important; }
+      }
+    </style>
     <script type="module" crossorigin src="/assets/index-Blw5Ig4c.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-C7bZplXY.css">
   </head>
+
   <body>
-    <div id="root"></div>
+    <!-- App wrapper so we can fade the app in while intro fades out -->
+    <div id="app-viewport" class="app-viewport">
+      <div id="root"></div>
+    </div>
+
+    <!-- Minimal intro overlay -->
+    <div id="intro" class="intro-screen">
+      <div class="intro-content">
+        <div class="intro-logo-wrap">
+          <img class="intro-logo" src="/Static/logo.svg" alt="Logo">
+        </div>
+
+        <div class="intro-text">
+          <span class="intro-title">Ashwinder&nbsp;Bhupal</span>
+          <!-- Optional subtitle under name:
+          <div style="font-family:'Playfair Display',serif; font-size:.95rem; color:#fff; opacity:.85; margin-top:2px;">
+            Portfolio
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Your app entry (Vite dev). In production, Vite replaces this with the built asset. -->
+
+    <!-- Intro logic (with mobile/iOS-safe fallback) -->
+    <script>
+      // Timings
+      const HOLD = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 900 : 2000;
+      const FADE_DURATION = 800; // must match CSS .8s
+
+      const intro = document.getElementById('intro');
+      const appViewport = document.getElementById('app-viewport');
+
+      let backupTimer;
+
+      function startIntro() {
+        intro.classList.add('active');
+        // safety: if 'load' is slow or never fires on some mobile cases,
+        // force-finish after a max window
+        backupTimer = setTimeout(endIntro, HOLD + 2500);
+      }
+
+      function endIntro() {
+        if (!intro) return;
+        appViewport.classList.add('visible');   // app fades IN
+        intro.classList.add('fade-out');        // intro fades OUT
+        setTimeout(() => {
+          if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+        }, FADE_DURATION + 50);
+        clearTimeout(backupTimer);
+      }
+
+      // Start as soon as DOM is ready
+      window.addEventListener('DOMContentLoaded', startIntro, { once: true });
+
+      // Normal path: wait a short hold after all assets are loaded
+      window.addEventListener('load', () => {
+        setTimeout(endIntro, HOLD);
+      }, { once: true });
+
+      // bfcache / back-forward cache on iOS Safari
+      window.addEventListener('pageshow', (e) => {
+        if (e.persisted) endIntro();
+      });
+    </script>
   </body>
 </html>
