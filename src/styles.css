@@ -4191,3 +4191,19 @@ img, video {
   color: var(--text-muted);
   font-size: 1.1rem;
 }
+
+/* Restore minimal motion for the intro even when reduced-motion is ON */
+@media (prefers-reduced-motion: reduce){
+  .intro-screen,
+  .intro-screen .intro-text,
+  .app-viewport{
+    transition-property: opacity, transform !important;
+    transition-duration: .8s, .7s !important;
+    transition-timing-function: ease !important;
+  }
+  /* keep logo breathing off but allow a normal fade */
+  .intro-logo{
+    animation: none !important;
+    transition: opacity 600ms ease !important;
+  }
+}
