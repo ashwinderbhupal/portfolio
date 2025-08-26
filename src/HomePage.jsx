@@ -1044,7 +1044,7 @@ const HomePage = () => {
         <div style={styles.heroContent}>
           <div style={styles.heroTitle}>
             <h1 style={styles.titleLine}>
-              <span style={styles.titleText}>Ashwinder Bhupal</span>
+              <span style={styles.titleText}>Ashwinder singh Bhupal</span>
             </h1>
             <div style={styles.subtitleContainer}>
               <span style={styles.subtitle}>Computer Science &nbsp;•&nbsp;</span>
