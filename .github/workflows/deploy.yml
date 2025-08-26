@@ -1,36 +1,55 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (private ➜ public)
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ main ]     # run when you push to main
+  workflow_dispatch:        # allow manual runs
 
+# prevent overlapping deploys
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+# we only need read access in the private repo;
+# pushing to the public repo uses your PAT secret (below)
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
-      - name: Install & Build
+      - name: Install deps
+        run: npm ci
+
+      - name: Build (Vite)
+        env:
+          # With a custom domain, the site is served from root.
+          # Ensure vite.config.js uses base: '/' (or reads this env).
+          VITE_BASE: /
         run: |
-          npm ci
           npm run build
-          # SPA fallback for React Router:
+          # SPA fallback for React Router
           cp dist/index.html dist/404.html
 
-      - name: Deploy to gh-pages branch
+      - name: Deploy to public repo (portfolio-pages)
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.PAGES_TOKEN }}         # <-- add this secret in the private repo
+          external_repository: ashwinder9693/portfolio-pages
           publish_dir: dist
           publish_branch: gh-pages
-          cname: onlyjobs.work   # <- ensures CNAME file is added in the deployed branch
+          cname: onlyjobs.work                               # writes CNAME into gh-pages
+          force_orphan: true                                 # clean history on gh-pages
