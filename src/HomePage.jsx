@@ -1083,7 +1083,7 @@ const HomePage = () => {
               onMouseEnter={(e) => handleStatHover(e, true)}
               onMouseLeave={(e) => handleStatHover(e, false)}
             >
-              <span style={styles.statNumber} data-stat-number>5+</span>
+              <span style={styles.statNumber} data-stat-number>12+</span>
               <span style={styles.statLabel} data-stat-label>Certifications</span>
             </div>
             <div 

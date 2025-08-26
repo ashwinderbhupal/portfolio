@@ -1,8 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const ProjectsPage = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const particleCanvasRef = useRef(null);
+
+  // Professional color palette matching other pages
+  const colors = {
+    primary: '#2563eb',
+    primaryDark: '#1e40af',
+    primaryLight: '#3b82f6',
+    secondary: '#64748b',
+    accent: '#06b6d4',
+    accentDark: '#0891b2',
+    background: '#f8fafc',
+    backgroundAlt: '#f1f5f9',
+    cardBg: '#ffffff',
+    cardBgAlt: 'rgba(255, 255, 255, 0.9)',
+    text: '#1e293b',
+    textLight: '#64748b',
+    textMuted: '#94a3b8',
+    border: '#e2e8f0',
+    borderLight: '#f1f5f9',
+    shadow: 'rgba(15, 23, 42, 0.08)',
+    shadowMedium: 'rgba(15, 23, 42, 0.12)',
+    shadowHeavy: 'rgba(15, 23, 42, 0.25)',
+    gradient1: '#6366f1',
+    gradient2: '#8b5cf6',
+    gradient3: '#ec4899',
+    gradient4: '#06b6d4',
+    success: '#10b981',
+    warning: '#f59e0b',
+    glassBg: 'rgba(255, 255, 255, 0.9)',
+    glassBorder: 'rgba(255, 255, 255, 0.2)'
+  };
 
   const projects = [
     {
@@ -62,6 +95,94 @@ const ProjectsPage = () => {
     }
   ];
 
+  // Effects and animations
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 300);
+    
+    // Mouse tracking for interactive elements
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    
+    const handleMouseMove = (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    };
+    
+    const smoothMouseFollow = () => {
+      currentX += (targetX - currentX) * 0.1;
+      currentY += (targetY - currentY) * 0.1;
+      setMousePosition({ x: currentX, y: currentY });
+      requestAnimationFrame(smoothMouseFollow);
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    smoothMouseFollow();
+    
+    // Particle system
+    initParticleSystem();
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const initParticleSystem = () => {
+    const canvas = particleCanvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const updateCanvasSize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    updateCanvasSize();
+    
+    const particles = [];
+    const particleCount = window.innerWidth < 768 ? 20 : 40;
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: Math.random() * 2 + 1,
+        opacity: Math.random() * 0.3 + 0.1
+      });
+    }
+    
+    let animationId;
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.forEach(particle => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        
+        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+        
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(99, 102, 241, ${particle.opacity})`;
+        ctx.fill();
+      });
+      
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animate();
+    
+    const handleResize = () => updateCanvasSize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener('resize', handleResize);
+    };
+  };
+
   const filteredProjects = projects.filter(project => {
     const matchesFilter = activeFilter === 'All' || project.category === activeFilter;
     const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -69,84 +190,596 @@ const ProjectsPage = () => {
     return matchesFilter && matchesSearch;
   });
 
+  // Comprehensive styles
+  const styles = {
+    projectsPage: {
+      background: `
+        linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #ffffff 75%, #f8fafc 100%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+      `,
+      minHeight: '100vh',
+      position: 'relative',
+      overflow: 'hidden',
+      fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      paddingTop: '85px'
+    },
+
+    particleCanvas: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: 1
+    },
+
+    container: {
+      maxWidth: '1400px',
+      margin: '0 auto',
+      padding: '0 1rem',
+      position: 'relative',
+      zIndex: 2,
+      '@media (min-width: 768px)': {
+        padding: '0 2rem'
+      }
+    },
+
+    floatingShapes: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      top: 0,
+      left: 0,
+      overflow: 'hidden',
+      zIndex: 0
+    },
+
+    shape: (i) => ({
+      position: 'absolute',
+      borderRadius: ['50%', '20%', '30%', '40%'][i % 4],
+      background: [
+        `linear-gradient(45deg, ${colors.gradient1}12, ${colors.gradient2}08)`,
+        `linear-gradient(135deg, ${colors.gradient2}10, ${colors.gradient3}06)`,
+        `linear-gradient(225deg, ${colors.gradient3}14, ${colors.gradient4}10)`,
+        `linear-gradient(315deg, ${colors.gradient4}12, ${colors.gradient1}07)`
+      ][i % 4],
+      animation: `float-${i % 4} ${12 + (i % 3) * 4}s ease-in-out infinite`,
+      backdropFilter: 'blur(1px)',
+      width: `${8 + (i % 6) * 4}px`,
+      height: `${8 + (i % 6) * 4}px`,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      opacity: 0.15,
+      transform: `translate(${mousePosition.x * 0.005 * ((i % 3) + 1)}px, ${mousePosition.y * 0.005 * ((i % 3) + 1)}px)`,
+      transition: 'transform 0.3s ease-out'
+    }),
+
+    projectsHero: {
+      textAlign: 'center',
+      padding: '4rem 0 6rem 0',
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+      transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)'
+    },
+
+    pageTitle: {
+      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
+      fontWeight: '900',
+      background: `
+        linear-gradient(
+          135deg, 
+          ${colors.text} 0%, 
+          ${colors.primary} 25%, 
+          ${colors.gradient2} 50%, 
+          ${colors.accent} 75%, 
+          ${colors.gradient1} 100%
+        )
+      `,
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      letterSpacing: '-0.02em',
+      lineHeight: '1.1',
+      marginBottom: '1.5rem',
+      backgroundSize: '400% 400%',
+      animation: 'gradientShift 8s ease-in-out infinite'
+    },
+
+    pageSubtitle: {
+      fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
+      lineHeight: '1.7',
+      color: colors.textLight,
+      maxWidth: '700px',
+      margin: '0 auto',
+      fontWeight: '400'
+    },
+
+    projectsFilter: {
+      marginBottom: '4rem',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2rem',
+      alignItems: 'center',
+      '@media (min-width: 768px)': {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: '3rem'
+      }
+    },
+
+    filterTabs: {
+      display: 'flex',
+      gap: '0.5rem',
+      padding: '0.5rem',
+      background: colors.cardBgAlt,
+      borderRadius: '16px',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: `1px solid ${colors.border}`,
+      boxShadow: `0 8px 32px ${colors.shadow}`,
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    },
+
+    filterTab: {
+      padding: '0.8rem 1.5rem',
+      borderRadius: '12px',
+      border: 'none',
+      background: 'transparent',
+      color: colors.textLight,
+      fontSize: '0.9rem',
+      fontWeight: '500',
+      cursor: 'pointer',
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      whiteSpace: 'nowrap',
+      touchAction: 'manipulation',
+      WebkitTapHighlightColor: 'transparent'
+    },
+
+    filterTabActive: {
+      background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
+      color: 'white',
+      boxShadow: `0 6px 20px rgba(37, 99, 235, 0.4)`,
+      transform: 'translateY(-2px)'
+    },
+
+    searchContainer: {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center'
+    },
+
+    searchInput: {
+      padding: '0.8rem 1.5rem 0.8rem 3rem',
+      borderRadius: '16px',
+      border: `1px solid ${colors.border}`,
+      background: colors.cardBgAlt,
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      fontSize: '0.95rem',
+      color: colors.text,
+      outline: 'none',
+      transition: 'all 0.3s ease',
+      minWidth: '250px',
+      boxShadow: `0 4px 16px ${colors.shadow}`
+    },
+
+    searchIcon: {
+      position: 'absolute',
+      left: '1.2rem',
+      color: colors.textMuted,
+      fontSize: '1rem'
+    },
+
+    projectsGrid: {
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      gap: '2rem',
+      marginBottom: '4rem',
+      '@media (min-width: 640px)': {
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '2.5rem'
+      },
+      '@media (min-width: 1024px)': {
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '3rem'
+      }
+    },
+
+    projectCard: {
+      background: colors.cardBg,
+      borderRadius: '24px',
+      overflow: 'hidden',
+      boxShadow: `
+        0 15px 40px rgba(15, 23, 42, 0.08),
+        0 6px 20px rgba(15, 23, 42, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9)
+      `,
+      border: `1px solid ${colors.border}`,
+      transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+      position: 'relative',
+      backdropFilter: 'blur(20px)',
+      cursor: 'pointer'
+    },
+
+    projectCardFeatured: {
+      border: `2px solid ${colors.primary}20`,
+      boxShadow: `
+        0 20px 50px rgba(37, 99, 235, 0.15),
+        0 8px 25px rgba(37, 99, 235, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9)
+      `
+    },
+
+    projectImage: {
+      position: 'relative',
+      height: '200px',
+      background: `linear-gradient(135deg, ${colors.backgroundAlt} 0%, ${colors.background} 100%)`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden'
+    },
+
+    projectPreview: {
+      fontSize: '4rem',
+      opacity: 0.3,
+      filter: 'grayscale(20%)'
+    },
+
+    projectOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: 'rgba(15, 23, 42, 0.8)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      opacity: 0,
+      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)'
+    },
+
+    projectLinks: {
+      display: 'flex',
+      gap: '1rem'
+    },
+
+    projectLink: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      padding: '0.8rem 1.5rem',
+      background: colors.cardBgAlt,
+      color: colors.text,
+      textDecoration: 'none',
+      borderRadius: '12px',
+      fontSize: '0.9rem',
+      fontWeight: '500',
+      transition: 'all 0.3s ease',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      border: `1px solid ${colors.glassBorder}`
+    },
+
+    projectBanner: {
+      position: 'absolute',
+      top: '1rem',
+      right: '1rem',
+      background: `linear-gradient(135deg, ${colors.gradient1} 0%, ${colors.gradient2} 100%)`,
+      color: 'white',
+      padding: '0.4rem 1rem',
+      borderRadius: '20px',
+      fontSize: '0.8rem',
+      fontWeight: '600',
+      boxShadow: `0 4px 12px rgba(99, 102, 241, 0.3)`
+    },
+
+    projectContent: {
+      padding: '2rem'
+    },
+
+    projectCategory: {
+      color: colors.primary,
+      fontSize: '0.85rem',
+      fontWeight: '600',
+      textTransform: 'uppercase',
+      letterSpacing: '0.5px',
+      marginBottom: '0.8rem'
+    },
+
+    projectTitle: {
+      fontSize: '1.4rem',
+      fontWeight: '700',
+      color: colors.text,
+      marginBottom: '1rem',
+      lineHeight: '1.3'
+    },
+
+    projectDescription: {
+      color: colors.textLight,
+      lineHeight: '1.6',
+      marginBottom: '1.5rem',
+      fontSize: '0.95rem'
+    },
+
+    projectTech: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '0.5rem',
+      marginBottom: '1.5rem'
+    },
+
+    techTag: {
+      background: `${colors.primary}10`,
+      color: colors.primary,
+      padding: '0.3rem 0.8rem',
+      borderRadius: '20px',
+      fontSize: '0.8rem',
+      fontWeight: '500',
+      border: `1px solid ${colors.primary}20`
+    },
+
+    projectStats: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0.5rem'
+    },
+
+    statItem: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      color: colors.textMuted,
+      fontSize: '0.85rem'
+    },
+
+    noProjects: {
+      textAlign: 'center',
+      padding: '4rem 2rem',
+      color: colors.textMuted,
+      fontSize: '1.1rem'
+    }
+  };
+
+  // Event handlers
+  const handleCardHover = (e, isEntering) => {
+    const overlay = e.currentTarget.querySelector('[data-overlay]');
+    
+    if (isEntering) {
+      e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
+      e.currentTarget.style.boxShadow = `
+        0 25px 60px rgba(15, 23, 42, 0.15),
+        0 12px 30px rgba(15, 23, 42, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9)
+      `;
+      if (overlay) {
+        overlay.style.opacity = '1';
+      }
+    } else {
+      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+      e.currentTarget.style.boxShadow = `
+        0 15px 40px rgba(15, 23, 42, 0.08),
+        0 6px 20px rgba(15, 23, 42, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9)
+      `;
+      if (overlay) {
+        overlay.style.opacity = '0';
+      }
+    }
+  };
+
+  const handleFilterHover = (e, isEntering, isActive) => {
+    if (isActive) return;
+    
+    if (isEntering) {
+      e.target.style.background = `${colors.primary}10`;
+      e.target.style.color = colors.primary;
+      e.target.style.transform = 'translateY(-2px)';
+    } else {
+      e.target.style.background = 'transparent';
+      e.target.style.color = colors.textLight;
+      e.target.style.transform = 'translateY(0)';
+    }
+  };
+
+  const handleSearchFocus = (e, isFocus) => {
+    if (isFocus) {
+      e.target.style.borderColor = colors.primary;
+      e.target.style.boxShadow = `0 6px 20px rgba(37, 99, 235, 0.2)`;
+    } else {
+      e.target.style.borderColor = colors.border;
+      e.target.style.boxShadow = `0 4px 16px ${colors.shadow}`;
+    }
+  };
+
+  const getProjectEmoji = (category) => {
+    switch(category) {
+      case 'Web Development': return '🌐';
+      case 'AI/ML Research': return '🤖';
+      case 'Research': return '🔬';
+      default: return '💻';
+    }
+  };
+
   return (
-    <div className="page projects-page">
-      <div className="container">
-        <div className="projects-hero" data-animate id="projects-hero">
-          <h1 className="page-title">My Projects</h1>
-          <p className="page-subtitle">
+    <div style={styles.projectsPage}>
+      <canvas 
+        ref={particleCanvasRef}
+        style={styles.particleCanvas}
+      />
+      
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+          
+          @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          
+          @keyframes float-0 {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+            25% { transform: translate(12px, -12px) rotate(90deg) scale(1.03); }
+            50% { transform: translate(20px, 0px) rotate(180deg) scale(1); }
+            75% { transform: translate(8px, 12px) rotate(270deg) scale(0.97); }
+          }
+          
+          @keyframes float-1 {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+            25% { transform: translate(-15px, 15px) rotate(-90deg) scale(0.92); }
+            50% { transform: translate(0px, 28px) rotate(-180deg) scale(1.08); }
+            75% { transform: translate(15px, 15px) rotate(-270deg) scale(1); }
+          }
+          
+          @keyframes float-2 {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+            33% { transform: translate(18px, -6px) rotate(120deg) scale(1.02); }
+            66% { transform: translate(-6px, 18px) rotate(240deg) scale(0.98); }
+          }
+          
+          @keyframes float-3 {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
+            50% { transform: translate(-12px, -12px) rotate(-180deg) scale(1.05); }
+          }
+          
+          * {
+            box-sizing: border-box;
+          }
+          
+          html {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+          }
+          
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+          }
+          
+          @media (max-width: 767px) {
+            body {
+              font-size: 16px;
+            }
+          }
+        `}
+      </style>
+
+      {/* Floating background shapes */}
+      <div style={styles.floatingShapes}>
+        {[...Array(16)].map((_, i) => (
+          <div key={i} style={styles.shape(i)}></div>
+        ))}
+      </div>
+
+      <div style={styles.container}>
+        <div style={styles.projectsHero}>
+          <h1 style={styles.pageTitle}>My Projects</h1>
+          <p style={styles.pageSubtitle}>
             A showcase of my technical skills and innovative solutions across various domains
           </p>
         </div>
 
-        <div className="projects-filter" data-animate id="filter">
-          <div className="filter-tabs">
+        <div style={styles.projectsFilter}>
+          <div style={styles.filterTabs}>
             {['All', 'Web Development', 'AI/ML Research', 'Research', 'Mobile'].map((filter) => (
               <button 
                 key={filter}
-                className={`filter-tab ${activeFilter === filter ? 'active' : ''}`}
+                style={{
+                  ...styles.filterTab,
+                  ...(activeFilter === filter ? styles.filterTabActive : {})
+                }}
                 onClick={() => setActiveFilter(filter)}
+                onMouseEnter={(e) => handleFilterHover(e, true, activeFilter === filter)}
+                onMouseLeave={(e) => handleFilterHover(e, false, activeFilter === filter)}
               >
                 {filter}
               </button>
             ))}
           </div>
-          <div className="search-container">
+          <div style={styles.searchContainer}>
             <input
               type="text"
               placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input"
+              style={styles.searchInput}
+              onFocus={(e) => handleSearchFocus(e, true)}
+              onBlur={(e) => handleSearchFocus(e, false)}
             />
-            <span className="search-icon">🔍</span>
+            <span style={styles.searchIcon}>🔍</span>
           </div>
         </div>
 
-        <div className="projects-grid" data-animate id="projects-grid">
+        <div style={styles.projectsGrid}>
           {filteredProjects.map((project) => (
-            <div key={project.id} className={`project-card ${project.featured ? 'featured' : ''}`}>
-              <div className="project-image">
-                <div className="project-overlay">
-                  <div className="project-links">
+            <div 
+              key={project.id} 
+              style={{
+                ...styles.projectCard,
+                ...(project.featured ? styles.projectCardFeatured : {})
+              }}
+              onMouseEnter={(e) => handleCardHover(e, true)}
+              onMouseLeave={(e) => handleCardHover(e, false)}
+            >
+              <div style={styles.projectImage}>
+                <div 
+                  style={styles.projectOverlay}
+                  data-overlay
+                >
+                  <div style={styles.projectLinks}>
                     {project.github && project.github !== "#" && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                        <i>📱</i> GitHub
+                      <a 
+                        href={project.github} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={styles.projectLink}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span>📱</span> GitHub
                       </a>
                     )}
                     {project.demo && project.demo !== "#" && (
-                      <a href={project.demo} className="project-link">
-                        <i>🌐</i> Live Demo
+                      <a 
+                        href={project.demo} 
+                        style={styles.projectLink}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <span>🌐</span> Live Demo
                       </a>
                     )}
                   </div>
                 </div>
-                <div className="project-preview">
-                  <span className="project-emoji">
-                    {project.category === 'Web Development' ? '🌐' : 
-                     project.category === 'AI/ML Research' ? '🤖' : 
-                     project.category === 'Research' ? '🔬' : '💻'}
-                  </span>
+                <div style={styles.projectPreview}>
+                  <span>{getProjectEmoji(project.category)}</span>
                 </div>
                 {project.featured && (
-                  <div className="project-banner">Featured</div>
+                  <div style={styles.projectBanner}>Featured</div>
                 )}
               </div>
-              <div className="project-content">
-                <div className="project-category">{project.category}</div>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <div className="project-tech">
+              <div style={styles.projectContent}>
+                <div style={styles.projectCategory}>{project.category}</div>
+                <h3 style={styles.projectTitle}>{project.title}</h3>
+                <p style={styles.projectDescription}>{project.description}</p>
+                <div style={styles.projectTech}>
                   {project.tech.map((tech, index) => (
-                    <span key={index}>{tech}</span>
+                    <span key={index} style={styles.techTag}>{tech}</span>
                   ))}
                 </div>
-                <div className="project-stats">
-                  {project.university && <span><i>🎓</i> {project.university}</span>}
-                  {project.course && <span><i>📚</i> {project.course}</span>}
-                  {project.program && <span><i>🔬</i> {project.program}</span>}
-                  {project.hackathon && <span><i>🏆</i> {project.hackathon}</span>}
-                  {project.year && <span><i>📅</i> {project.year}</span>}
+                <div style={styles.projectStats}>
+                  {project.university && <div style={styles.statItem}><span>🎓</span> {project.university}</div>}
+                  {project.course && <div style={styles.statItem}><span>📚</span> {project.course}</div>}
+                  {project.program && <div style={styles.statItem}><span>🔬</span> {project.program}</div>}
+                  {project.hackathon && <div style={styles.statItem}><span>🏆</span> {project.hackathon}</div>}
+                  {project.year && <div style={styles.statItem}><span>📅</span> {project.year}</div>}
                 </div>
               </div>
             </div>
@@ -154,7 +787,7 @@ const ProjectsPage = () => {
         </div>
 
         {filteredProjects.length === 0 && (
-          <div className="no-projects">
+          <div style={styles.noProjects}>
             <p>No projects found matching your criteria.</p>
           </div>
         )}
