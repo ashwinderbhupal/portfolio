@@ -598,12 +598,12 @@ const ProjectsPage = () => {
   };
 
   const getProjectEmoji = (category) => {
-    switch(category) {
-      case 'Web Development': return '🌐';
-      case 'AI/ML Research': return '🤖';
-      case 'Research': return '🔬';
-      default: return '💻';
-    }
+    // switch(category) {
+    //   // case 'Web Development': return '🌐';
+    //   case 'AI/ML Research': return '🤖';
+    //   case 'Research': return '🔬';
+    //   default: return '💻';
+    // }
   };
 
   return (
@@ -753,7 +753,7 @@ const ProjectsPage = () => {
                         style={styles.projectLink}
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <span>🌐</span> Live Demo
+                        <span>🌐</span> Live Demo 
                       </a>
                     )}
                   </div>

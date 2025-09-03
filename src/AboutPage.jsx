@@ -224,7 +224,7 @@ const AboutPage = () => {
       lineHeight: '1.7',
       color: colors.textLight,
       marginBottom: '3rem',
-      maxWidth: '600px',
+      maxWidth: '850px',
       margin: '0 auto 3rem auto',
       fontWeight: '400',
       '@media (min-width: 1024px)': {
@@ -567,9 +567,7 @@ const AboutPage = () => {
           <div style={styles.aboutContent}>
             <h1 style={styles.pageTitle}>About Me</h1>
             <p style={styles.aboutLead}>
-              I'm a passionate Computer Science student who thrives on challenging the status quo
-              and pushing the boundaries of technology. With a strong foundation in programming
-              and research, I'm dedicated to creating innovative solutions that make a difference.
+             I'm a Computer Science student at Rutgers who's genuinely excited about what technology can do. My path has been pretty unique - I started at community college, got to spend a summer doing neural network research at Princeton, and now I'm diving deep into everything from AI to full-stack development. I love the challenge of taking complex problems and figuring out how to actually solve them, whether that's through a hackathon project or research. There's something really satisfying about building something that works and makes people's lives a little easier
             </p>
           </div>
 

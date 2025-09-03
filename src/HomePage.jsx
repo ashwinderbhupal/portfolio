@@ -1055,10 +1055,7 @@ const HomePage = () => {
           </div>
 
           <p style={styles.heroDescription}>
-            Passionate about challenging the status quo and pushing the boundaries of technology.
-            Pi Theta Kappa Honors Society nominee with expertise in full-stack development,
-            AI research, and data analysis. Driven by innovation and committed to creating 
-            impactful solutions that shape the future.
+           Building the future, one line of code at a time. As a Computer Science student at Rutgers University and Princeton Transfer Scholar, I combine strong academic performance with hands-on innovation to create technology that solves real problems. From conducting AI research on brain-computer interfaces to developing data visualization tools at hackathons, I'm passionate about leveraging machine learning, full-stack development, and creative thinking to shape tomorrow's digital landscape.
           </p>
 
           <div style={styles.heroStats}>
