@@ -39,6 +39,34 @@ const ProjectsPage = () => {
 
   const projects = [
     {
+      id: 7,
+      title: "FindJob4Me",
+      category: "Web Development",
+      description: "Full-stack job-finder delivering live, real-world listings with deep links to original posts. Includes email/password + Google OAuth (passwords securely hashed), user profiles with résumé/CV upload, Cloudinary-hosted profile images, dynamic Browse Jobs with search/sort, application tracking, contact form persisted to DB, and a role-based admin dashboard for user oversight.",
+      tech: ["React", "Node.js", "Express", "MongoDB", "Cloudinary", "Vercel", "APFI", "HTML", "CSS", "JavaScript"],
+      github: "private",
+      demo: "https://findjob4me.vercel.app",
+      featured: true,
+      university: "Rutgers University",
+      course: null,
+      year: "2025"
+    },
+    {
+      id: 8,
+      title: "OnlyJobs.work — Portfolio Website",
+      category: "Web Development",
+      description: "Personal portfolio at onlyjobs.work showcasing projects (e.g., FindJob4Me, Railway Booking System), skills, and contact info. Features responsive UI, clean project cards with live demos, and clear navigation; optimized for performance and basic SEO.",
+      tech: ["HTML", "CSS", "JavaScript", "React", "Github Pages", "JSX"],
+      github: "https://github.com/Ashwinder9693/portfolio-pages",
+      demo: "https://onlyjobs.work",
+      featured: true,
+      university: null,
+      course: null,
+      year: "2025"
+    }
+    ,
+
+    {
       id: 1,
       title: "Railway Booking System",
       category: "Web Development",
@@ -98,29 +126,29 @@ const ProjectsPage = () => {
   // Effects and animations
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 300);
-    
+
     // Mouse tracking for interactive elements
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
-    
+
     const handleMouseMove = (e) => {
       targetX = e.clientX;
       targetY = e.clientY;
     };
-    
+
     const smoothMouseFollow = () => {
       currentX += (targetX - currentX) * 0.1;
       currentY += (targetY - currentY) * 0.1;
       setMousePosition({ x: currentX, y: currentY });
       requestAnimationFrame(smoothMouseFollow);
     };
-    
+
     window.addEventListener('mousemove', handleMouseMove);
     smoothMouseFollow();
-    
+
     // Particle system
     initParticleSystem();
-    
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -130,17 +158,17 @@ const ProjectsPage = () => {
   const initParticleSystem = () => {
     const canvas = particleCanvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     const updateCanvasSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     updateCanvasSize();
-    
+
     const particles = [];
     const particleCount = window.innerWidth < 768 ? 20 : 40;
-    
+
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -151,32 +179,32 @@ const ProjectsPage = () => {
         opacity: Math.random() * 0.3 + 0.1
       });
     }
-    
+
     let animationId;
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       particles.forEach(particle => {
         particle.x += particle.vx;
         particle.y += particle.vy;
-        
+
         if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
         if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
-        
+
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(99, 102, 241, ${particle.opacity})`;
         ctx.fill();
       });
-      
+
       animationId = requestAnimationFrame(animate);
     };
-    
+
     animate();
-    
+
     const handleResize = () => updateCanvasSize();
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('resize', handleResize);
@@ -186,7 +214,7 @@ const ProjectsPage = () => {
   const filteredProjects = projects.filter(project => {
     const matchesFilter = activeFilter === 'All' || project.category === activeFilter;
     const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.description.toLowerCase().includes(searchTerm.toLowerCase());
+      project.description.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
@@ -549,7 +577,7 @@ const ProjectsPage = () => {
   // Event handlers
   const handleCardHover = (e, isEntering) => {
     const overlay = e.currentTarget.querySelector('[data-overlay]');
-    
+
     if (isEntering) {
       e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
       e.currentTarget.style.boxShadow = `
@@ -575,7 +603,7 @@ const ProjectsPage = () => {
 
   const handleFilterHover = (e, isEntering, isActive) => {
     if (isActive) return;
-    
+
     if (isEntering) {
       e.target.style.background = `${colors.primary}10`;
       e.target.style.color = colors.primary;
@@ -608,11 +636,11 @@ const ProjectsPage = () => {
 
   return (
     <div style={styles.projectsPage}>
-      <canvas 
+      <canvas
         ref={particleCanvasRef}
         style={styles.particleCanvas}
       />
-      
+
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
@@ -691,7 +719,7 @@ const ProjectsPage = () => {
         <div style={styles.projectsFilter}>
           <div style={styles.filterTabs}>
             {['All', 'Web Development', 'AI/ML Research', 'Research', 'Mobile'].map((filter) => (
-              <button 
+              <button
                 key={filter}
                 style={{
                   ...styles.filterTab,
@@ -721,8 +749,8 @@ const ProjectsPage = () => {
 
         <div style={styles.projectsGrid}>
           {filteredProjects.map((project) => (
-            <div 
-              key={project.id} 
+            <div
+              key={project.id}
               style={{
                 ...styles.projectCard,
                 ...(project.featured ? styles.projectCardFeatured : {})
@@ -731,16 +759,16 @@ const ProjectsPage = () => {
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
               <div style={styles.projectImage}>
-                <div 
+                <div
                   style={styles.projectOverlay}
                   data-overlay
                 >
                   <div style={styles.projectLinks}>
                     {project.github && project.github !== "#" && (
-                      <a 
-                        href={project.github} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={styles.projectLink}
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -748,12 +776,12 @@ const ProjectsPage = () => {
                       </a>
                     )}
                     {project.demo && project.demo !== "#" && (
-                      <a 
-                        href={project.demo} 
+                      <a
+                        href={project.demo}
                         style={styles.projectLink}
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <span>🌐</span> Live Demo 
+                        <span>🌐</span> Live Demo
                       </a>
                     )}
                   </div>
