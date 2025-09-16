@@ -44,7 +44,7 @@ const ProjectsPage = () => {
       category: "Web Development",
       description: "Full-stack job-finder delivering live, real-world listings with deep links to original posts. Includes email/password + Google OAuth (passwords securely hashed), user profiles with résumé/CV upload, Cloudinary-hosted profile images, dynamic Browse Jobs with search/sort, application tracking, contact form persisted to DB, and a role-based admin dashboard for user oversight.",
       tech: ["React", "Node.js", "Express", "MongoDB", "Cloudinary", "Vercel", "APFI", "HTML", "CSS", "JavaScript"],
-      github: "private",
+      github: null,
       demo: "https://findjob4me.vercel.app",
       featured: true,
       university: "Rutgers University",
