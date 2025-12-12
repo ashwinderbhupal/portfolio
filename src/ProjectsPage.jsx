@@ -39,6 +39,32 @@ const ProjectsPage = () => {
 
   const projects = [
     {
+      id: 9,
+      title: "ATM Interface System",
+      category: "Web Development",
+      description: "Console-based ATM simulation built with Core Java featuring secure user authentication, balance inquiry, transaction history tracking, and deposit/withdraw functionality. Implements OOP principles, exception handling, file handling for data persistence, and modular programming for maintainable code.",
+      tech: ["Java", "OOP", "File Handling", "Exception Handling", "Collections"],
+      github: "https://github.com/Ashwinder9693/OIBSIP_JavaDevelopment_3",
+      demo: "https://youtu.be/g9_R8GXpiLs",
+      featured: false,
+      internship: "Oasis Infobyte",
+      year: "2025",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80"
+    },
+    {
+      id: 10,
+      title: "Library Management System",
+      category: "Web Development",
+      description: "A modern, full-featured library management system with role-based access control, membership tiers (Silver, Gold, Platinum), book reservations, fine management, and comprehensive reporting. Features secure password hashing with PBKDF2-SHA256, 29 normalized database tables, and an intuitive web interface for both administrators and members.",
+      tech: ["Java", "JSP/Servlets", "JDBC", "MySQL", "Apache Tomcat", "HTML", "CSS", "MVC Architecture"],
+      github: "https://github.com/Ashwinder9693/OIBSIP_JavaDevelopment_5",
+      demo: "https://youtu.be/K4wSn0WNYqk",
+      featured: true,
+      internship: "Oasis Infobyte",
+      year: "2025",
+      image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&q=80"
+    },
+    {
       id: 7,
       title: "FindJob4Me",
       category: "Web Development",
@@ -49,7 +75,8 @@ const ProjectsPage = () => {
       featured: true,
       university: "Rutgers University",
       course: null,
-      year: "2025"
+      year: "2025",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80"
     },
     {
       id: 8,
@@ -62,10 +89,9 @@ const ProjectsPage = () => {
       featured: true,
       university: null,
       course: null,
-      year: "2025"
-    }
-    ,
-
+      year: "2025",
+      image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80"
+    },
     {
       id: 1,
       title: "Railway Booking System",
@@ -77,7 +103,8 @@ const ProjectsPage = () => {
       featured: true,
       university: "Rutgers University",
       course: "CS336 - Database Systems",
-      year: "2024"
+      year: "2024",
+      image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80"
     },
     {
       id: 2,
@@ -88,7 +115,8 @@ const ProjectsPage = () => {
       github: "https://github.com/Ashwinder9693/FinalHACKTCNJ",
       demo: "#",
       featured: true,
-      hackathon: "Hack TCNJ"
+      hackathon: "Hack TCNJ",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
     },
     {
       id: 3,
@@ -98,7 +126,8 @@ const ProjectsPage = () => {
       tech: ["AI Ethics", "Research", "Adobe Illustrator"],
       github: "#",
       demo: "https://www.blogger.com/blog/post/edit/preview/4726622585428651523/9177347735298150073",
-      university: "Princeton University"
+      university: "Princeton University",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80"
     },
     {
       id: 4,
@@ -108,7 +137,8 @@ const ProjectsPage = () => {
       tech: ["Python", "Folium", "JavaScript", "HTML"],
       github: "https://github.com/Ashwinder9693/team6_NJITHackathon",
       demo: "#",
-      hackathon: "NJIT Hackathon"
+      hackathon: "NJIT Hackathon",
+      image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&q=80"
     },
     {
       id: 5,
@@ -119,7 +149,8 @@ const ProjectsPage = () => {
       github: "https://www.linkedin.com/in/ashwinder-singh-5b1220206/overlay/1725027609548/single-media-viewer/?profileId=ACoAADRbnVUBZiNEHBmmCQ0747XNEvHdtbUuRnk",
       demo: "https://tsi-ebcao.princeton.edu/tsi-experience",
       university: "Princeton University",
-      program: "TSI (Teachers as Scholars Institute)"
+      program: "TSI (Teachers as Scholars Institute)",
+      image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80"
     }
   ];
 
@@ -440,15 +471,20 @@ const ProjectsPage = () => {
       `
     },
 
-    projectImage: {
+    projectImage: (imageUrl) => ({
       position: 'relative',
       height: '200px',
-      background: `linear-gradient(135deg, ${colors.backgroundAlt} 0%, ${colors.background} 100%)`,
+      background: imageUrl 
+        ? `url(${imageUrl})` 
+        : `linear-gradient(135deg, ${colors.backgroundAlt} 0%, ${colors.background} 100%)`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       overflow: 'hidden'
-    },
+    }),
 
     projectPreview: {
       fontSize: '4rem',
@@ -758,7 +794,7 @@ const ProjectsPage = () => {
               onMouseEnter={(e) => handleCardHover(e, true)}
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
-              <div style={styles.projectImage}>
+              <div style={styles.projectImage(project.image)}>
                 <div
                   style={styles.projectOverlay}
                   data-overlay
@@ -778,6 +814,8 @@ const ProjectsPage = () => {
                     {project.demo && project.demo !== "#" && (
                       <a
                         href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         style={styles.projectLink}
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -786,9 +824,11 @@ const ProjectsPage = () => {
                     )}
                   </div>
                 </div>
-                <div style={styles.projectPreview}>
-                  <span>{getProjectEmoji(project.category)}</span>
-                </div>
+                {!project.image && (
+                  <div style={styles.projectPreview}>
+                    <span>{getProjectEmoji(project.category)}</span>
+                  </div>
+                )}
                 {project.featured && (
                   <div style={styles.projectBanner}>Featured</div>
                 )}
@@ -804,6 +844,7 @@ const ProjectsPage = () => {
                 </div>
                 <div style={styles.projectStats}>
                   {project.university && <div style={styles.statItem}><span>🎓</span> {project.university}</div>}
+                  {project.internship && <div style={styles.statItem}><span>💼</span> {project.internship}</div>}
                   {project.course && <div style={styles.statItem}><span>📚</span> {project.course}</div>}
                   {project.program && <div style={styles.statItem}><span>🔬</span> {project.program}</div>}
                   {project.hackathon && <div style={styles.statItem}><span>🏆</span> {project.hackathon}</div>}

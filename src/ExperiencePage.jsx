@@ -39,22 +39,62 @@ const ExperiencePage = () => {
   const experiences = [
     {
       id: 1,
-      title: "Fulfillment Center Associate",
       company: "Amazon",
       period: "Oct 2024 - Present",
-      location: "Edison, NJ",
+      totalDuration: "1 yr 3 mos",
       type: "Part-time",
       logo: "📦",
       current: true,
-      responsibilities: [
-        "Enhanced process efficiency by analyzing data and optimizing package routing",
-        "Utilized inventory management software to monitor and sort packages efficiently",
-        "Collaborated on safety protocols and troubleshooting scanning issues"
-      ],
-      skills: ["Data Analysis", "Process Optimization", "Inventory Management", "Team Collaboration"]
+      isGrouped: true,
+      roles: [
+        {
+          title: "Fulfillment Center Associate",
+          period: "Apr 2025 - Present",
+          location: "Monroe, NJ",
+          responsibilities: [
+            "Perform daily tasks such as picking, packing, sorting, and shipping customer orders with accuracy and efficiency",
+            "Ensure proper handling of inventory and maintain organized stock levels to support smooth operations",
+            "Follow safety standards and operational procedures to create a secure and productive work environment"
+          ],
+          skills: ["Order Fulfillment", "Inventory Management", "Warehouse Operations", "Safety Compliance"]
+        },
+        {
+          title: "Sortation Associate",
+          period: "Oct 2024 - Apr 2025",
+          location: "Edison, NJ",
+          responsibilities: [
+            "Ensured efficient and accurate sorting of packages to meet tight delivery deadlines",
+            "Scanned, sorted, and tracked packages while adhering to strict safety standards",
+            "Consistently achieved a 99% accuracy rate and exceeded daily quotas by 15%",
+            "Enhanced skills in time management, organization, and adaptability to support customer satisfaction"
+          ],
+          skills: ["Package Sorting", "Time Management", "Accuracy", "Adaptability", "Safety Standards"]
+        }
+      ]
     },
     {
       id: 2,
+      title: "Java Development Intern",
+      company: "Oasis Infobyte",
+      period: "Oct 2025 - Nov 2025",
+      location: "Remote",
+      type: "Internship",
+      logo: "☕",
+      current: false,
+      isGrouped: false,
+      responsibilities: [
+        "Developed an ATM Interface System using Core Java, implementing features such as balance inquiry, transaction history, deposit/withdraw functions, and secure user authentication",
+        "Built a Library Management System using Java, JSP/Servlets, JDBC, SQL, and Apache Tomcat, focusing on database design, CRUD operations, session management, and UI functionality",
+        "Applied OOP principles, exception handling, file handling, collections, and modular programming to ensure maintainable and efficient code",
+        "Designed relational database schemas, optimized queries, and integrated backend logic with frontend components",
+        "Followed the MVC architecture to create structured and scalable applications",
+        "Conducted debugging, troubleshooting, and iterative testing to improve code quality and overall performance",
+        "Documented all development processes, project flows, and feature explanations for clarity and future scalability"
+      ],
+      skills: ["Java", "OOP", "JDBC", "SQL", "JSP/Servlets", "Apache Tomcat", "Git/GitHub", "MVC Architecture", "SDLC"]
+    },
+    {
+      id: 3,
       title: "Dietary Management",
       company: "Robert Wood Johnson Hospital",
       period: "Apr 2023 - Sept 2024",
@@ -62,6 +102,7 @@ const ExperiencePage = () => {
       type: "Part-time",
       logo: "🏥",
       current: false,
+      isGrouped: false,
       responsibilities: [
         "Managed dietary data to track patient needs and optimize meal planning",
         "Forecasted inventory needs using supply chain tools to reduce waste",
@@ -283,7 +324,7 @@ const ExperiencePage = () => {
 
     experienceHero: {
       textAlign: 'center',
-      padding: '4rem 0 6rem 0',
+      padding: '2rem 0 3rem 0',
       opacity: isVisible ? 1 : 0,
       transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
       transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -322,69 +363,43 @@ const ExperiencePage = () => {
     },
 
     sectionTitle: {
-      fontSize: 'clamp(2rem, 5vw, 3rem)',
+      fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
       fontWeight: '700',
       background: `linear-gradient(135deg, ${colors.text} 0%, ${colors.primary} 50%, ${colors.accent} 100%)`,
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
       textAlign: 'center',
-      marginBottom: '4rem',
+      marginBottom: '2rem',
       letterSpacing: '-0.02em'
     },
 
     experienceTimeline: {
-      marginBottom: '6rem'
+      marginBottom: '3rem'
     },
 
     timeline: {
       position: 'relative',
       maxWidth: '1000px',
       margin: '0 auto',
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        left: '2rem',
-        top: '0',
-        height: '100%',
-        width: '3px',
-        background: `linear-gradient(180deg, ${colors.primary}, ${colors.accent})`,
-        borderRadius: '2px',
-        '@media (min-width: 768px)': {
-          left: '50%',
-          marginLeft: '-1.5px'
-        }
-      }
+      paddingLeft: '0.5rem'
     },
 
     timelineItem: {
       position: 'relative',
-      marginBottom: '3rem',
-      paddingLeft: '5rem',
-      '@media (min-width: 768px)': {
-        width: '50%',
-        paddingLeft: '0',
-        paddingRight: '2rem',
-        '&:nth-child(even)': {
-          marginLeft: '50%',
-          paddingLeft: '2rem',
-          paddingRight: '0'
-        }
-      }
+      marginBottom: '2rem',
+      paddingLeft: '3rem'
     },
 
     timelineMarker: {
       position: 'absolute',
-      left: '1.2rem',
+      left: '0',
       top: '1rem',
-      width: '1.5rem',
-      height: '1.5rem',
+      width: '1.2rem',
+      height: '1.2rem',
       background: colors.cardBg,
       border: `3px solid ${colors.primary}`,
       borderRadius: '50%',
-      zIndex: 3,
-      '@media (min-width: 768px)': {
-        left: 'calc(50% - 0.75rem)'
-      }
+      zIndex: 3
     },
 
     timelineMarkerCurrent: {
@@ -395,8 +410,8 @@ const ExperiencePage = () => {
 
     timelineContent: {
       background: colors.cardBg,
-      borderRadius: '24px',
-      padding: '2.5rem',
+      borderRadius: '20px',
+      padding: '1.5rem',
       boxShadow: `
         0 15px 40px rgba(15, 23, 42, 0.08),
         0 6px 20px rgba(15, 23, 42, 0.04),
@@ -411,40 +426,45 @@ const ExperiencePage = () => {
     experienceHeader: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '1.5rem',
-      marginBottom: '2rem'
+      gap: '1rem',
+      marginBottom: '1.5rem',
+      flexWrap: 'wrap'
     },
 
     companyLogo: {
-      fontSize: '3rem',
+      fontSize: '2.5rem',
       filter: 'drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3))',
       flexShrink: 0
     },
 
     experienceDetails: {
-      flex: 1
+      flex: 1,
+      textAlign: 'left'
     },
 
     experienceTitle: {
-      fontSize: '1.5rem',
+      fontSize: '1.3rem',
       fontWeight: '700',
       color: colors.text,
       marginBottom: '0.5rem',
-      lineHeight: '1.3'
+      lineHeight: '1.3',
+      textAlign: 'left'
     },
 
     experienceCompany: {
-      fontSize: '1.2rem',
+      fontSize: '1.1rem',
       fontWeight: '600',
       color: colors.primary,
-      marginBottom: '1rem'
+      marginBottom: '0.75rem',
+      textAlign: 'left'
     },
 
     experienceMeta: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '1rem',
-      alignItems: 'center'
+      gap: '0.5rem',
+      alignItems: 'flex-start',
+      flexDirection: 'column'
     },
 
     experiencePeriod: {
@@ -487,6 +507,82 @@ const ExperiencePage = () => {
       border: `1px solid ${colors.success}30`
     },
 
+    experienceTypeInternship: {
+      background: `${colors.accent}15`,
+      color: colors.accentDark,
+      border: `1px solid ${colors.accent}30`
+    },
+
+    // Grouped experience styles
+    groupedHeader: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '1rem',
+      marginBottom: '1rem',
+      paddingBottom: '1rem',
+      borderBottom: `1px solid ${colors.border}`,
+      flexWrap: 'wrap'
+    },
+
+    totalDuration: {
+      color: colors.textMuted,
+      fontSize: '0.85rem',
+      fontWeight: '500',
+      marginLeft: '0.5rem'
+    },
+
+    rolesContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2rem'
+    },
+
+    roleItem: {
+      position: 'relative',
+      paddingLeft: '1rem',
+      borderLeft: `3px solid ${colors.primary}30`
+    },
+
+    roleItemCurrent: {
+      borderLeft: `3px solid ${colors.primary}`
+    },
+
+    roleTitle: {
+      fontSize: '1.1rem',
+      fontWeight: '600',
+      color: colors.text,
+      marginBottom: '0.5rem',
+      textAlign: 'left'
+    },
+
+    roleMeta: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '0.5rem',
+      alignItems: 'flex-start',
+      marginBottom: '0.75rem',
+      flexDirection: 'column'
+    },
+
+    rolePeriod: {
+      color: colors.textMuted,
+      fontSize: '0.85rem',
+      fontWeight: '500'
+    },
+
+    roleLocation: {
+      color: colors.textLight,
+      fontSize: '0.85rem',
+      fontWeight: '500',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.3rem'
+    },
+
+    roleDescription: {
+      marginBottom: '1rem'
+    },
+
     experienceDescription: {
       marginBottom: '2rem'
     },
@@ -522,35 +618,27 @@ const ExperiencePage = () => {
     skillTag: {
       background: `${colors.primary}10`,
       color: colors.primary,
-      padding: '0.4rem 1rem',
+      padding: '0.3rem 0.7rem',
       borderRadius: '20px',
-      fontSize: '0.85rem',
+      fontSize: '0.75rem',
       fontWeight: '500',
       border: `1px solid ${colors.primary}20`
     },
 
     leadershipSection: {
-      marginBottom: '6rem'
+      marginBottom: '3rem'
     },
 
     leadershipGrid: {
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gap: '2rem',
-      '@media (min-width: 640px)': {
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '2.5rem'
-      },
-      '@media (min-width: 1024px)': {
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '3rem'
-      }
+      gap: '1.5rem'
     },
 
     leadershipCard: {
       background: colors.cardBg,
-      borderRadius: '24px',
-      padding: '2.5rem',
+      borderRadius: '20px',
+      padding: '1.5rem',
       boxShadow: `
         0 15px 40px rgba(15, 23, 42, 0.08),
         0 6px 20px rgba(15, 23, 42, 0.04),
@@ -600,25 +688,21 @@ const ExperiencePage = () => {
     },
 
     volunteerSection: {
-      marginBottom: '6rem'
+      marginBottom: '3rem'
     },
 
     volunteerGrid: {
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gap: '2rem',
+      gap: '1.5rem',
       maxWidth: '800px',
-      margin: '0 auto',
-      '@media (min-width: 768px)': {
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '2.5rem'
-      }
+      margin: '0 auto'
     },
 
     volunteerCard: {
       background: colors.cardBg,
-      borderRadius: '20px',
-      padding: '2rem',
+      borderRadius: '16px',
+      padding: '1.25rem',
       boxShadow: `
         0 12px 30px rgba(15, 23, 42, 0.08),
         0 5px 15px rgba(15, 23, 42, 0.04),
@@ -665,23 +749,19 @@ const ExperiencePage = () => {
     },
 
     skillsDeveloped: {
-      marginBottom: '6rem'
+      marginBottom: '3rem'
     },
 
     skillsCategoriesExp: {
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gap: '2rem',
-      '@media (min-width: 768px)': {
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '2.5rem'
-      }
+      gap: '1.5rem'
     },
 
     skillCategoryExp: {
       background: colors.cardBg,
-      borderRadius: '20px',
-      padding: '2.5rem',
+      borderRadius: '16px',
+      padding: '1.5rem',
       boxShadow: `
         0 15px 40px rgba(15, 23, 42, 0.08),
         0 6px 20px rgba(15, 23, 42, 0.04),
@@ -724,19 +804,15 @@ const ExperiencePage = () => {
     statsGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '1.5rem',
+      gap: '1rem',
       maxWidth: '800px',
-      margin: '0 auto',
-      '@media (min-width: 768px)': {
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '2rem'
-      }
+      margin: '0 auto'
     },
 
     statBox: {
       background: colors.cardBg,
-      borderRadius: '20px',
-      padding: '2rem 1.5rem',
+      borderRadius: '16px',
+      padding: '1.25rem 1rem',
       boxShadow: `
         0 12px 30px rgba(15, 23, 42, 0.08),
         0 5px 15px rgba(15, 23, 42, 0.04),
@@ -881,9 +957,124 @@ const ExperiencePage = () => {
             overflow-x: hidden;
           }
           
+          /* Mobile Responsive Styles */
           @media (max-width: 767px) {
             body {
               font-size: 16px;
+            }
+            
+            .experience-timeline-wrapper {
+              padding-left: 0 !important;
+            }
+            
+            .timeline-item {
+              padding-left: 2.5rem !important;
+              margin-bottom: 1.5rem !important;
+            }
+            
+            .timeline-marker {
+              left: 0 !important;
+              width: 1rem !important;
+              height: 1rem !important;
+            }
+            
+            .timeline-content {
+              padding: 1.25rem !important;
+              border-radius: 16px !important;
+            }
+            
+            .grouped-header {
+              flex-direction: column !important;
+              gap: 1rem !important;
+              padding-bottom: 1rem !important;
+              margin-bottom: 1rem !important;
+            }
+            
+            .company-logo {
+              font-size: 2rem !important;
+            }
+            
+            .experience-meta {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 0.5rem !important;
+            }
+            
+            .role-item {
+              padding-left: 1rem !important;
+            }
+            
+            .role-meta {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 0.5rem !important;
+            }
+            
+            .skills-container {
+              gap: 0.4rem !important;
+            }
+            
+            .skill-tag {
+              padding: 0.3rem 0.6rem !important;
+              font-size: 0.75rem !important;
+            }
+            
+            .leadership-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1.5rem !important;
+            }
+            
+            .leadership-card {
+              padding: 1.5rem !important;
+            }
+            
+            .volunteer-grid {
+              grid-template-columns: 1fr !important;
+            }
+            
+            .skills-categories {
+              grid-template-columns: 1fr !important;
+            }
+            
+            .stats-grid {
+              grid-template-columns: repeat(2, 1fr) !important;
+              gap: 1rem !important;
+            }
+            
+            .stat-box {
+              padding: 1.25rem 1rem !important;
+            }
+            
+            .section-title {
+              font-size: 1.5rem !important;
+              margin-bottom: 2rem !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .timeline-item {
+              padding-left: 2rem !important;
+            }
+            
+            .timeline-content {
+              padding: 1rem !important;
+            }
+            
+            .experience-title {
+              font-size: 1.1rem !important;
+            }
+            
+            .experience-company {
+              font-size: 1rem !important;
+            }
+            
+            .role-title {
+              font-size: 1rem !important;
+            }
+            
+            .responsibility-item {
+              font-size: 0.85rem !important;
+              line-height: 1.5 !important;
             }
           }
         `}
@@ -904,55 +1095,122 @@ const ExperiencePage = () => {
           </p>
         </div>
 
-        <div style={styles.experienceTimeline}>
-          <h2 style={styles.sectionTitle}>Professional Experience</h2>
+        <div style={styles.experienceTimeline} className="experience-timeline-wrapper">
+          <h2 style={styles.sectionTitle} className="section-title">Professional Experience</h2>
           <div style={styles.timeline}>
             {experiences.map((exp) => (
-              <div key={exp.id} style={styles.timelineItem}>
+              <div key={exp.id} style={styles.timelineItem} className="timeline-item">
                 <div 
                   style={{
                     ...styles.timelineMarker,
                     ...(exp.current ? styles.timelineMarkerCurrent : {})
                   }}
+                  className="timeline-marker"
                 ></div>
                 <div 
                   style={styles.timelineContent}
+                  className="timeline-content"
                   onMouseEnter={(e) => handleTimelineHover(e, true)}
                   onMouseLeave={(e) => handleTimelineHover(e, false)}
                 >
-                  <div style={styles.experienceHeader}>
-                    <div style={styles.companyLogo}>{exp.logo}</div>
-                    <div style={styles.experienceDetails}>
-                      <h3 style={styles.experienceTitle}>{exp.title}</h3>
-                      <h4 style={styles.experienceCompany}>{exp.company}</h4>
-                      <div style={styles.experienceMeta}>
-                        <span style={styles.experiencePeriod}>{exp.period}</span>
-                        <span style={styles.experienceLocation}>{exp.location}</span>
-                        <span 
-                          style={{
-                            ...styles.experienceType,
-                            ...(exp.type === 'Part-time' ? styles.experienceTypePart : styles.experienceTypeFull)
-                          }}
-                        >
-                          {exp.type}
-                        </span>
+                  {exp.isGrouped ? (
+                    // Grouped experience (multiple roles at same company)
+                    <>
+                      <div style={styles.groupedHeader} className="grouped-header">
+                        <div style={styles.companyLogo} className="company-logo">{exp.logo}</div>
+                        <div style={styles.experienceDetails}>
+                          <h4 style={styles.experienceCompany} className="experience-company">{exp.company}</h4>
+                          <div style={styles.experienceMeta} className="experience-meta">
+                            <span style={styles.experiencePeriod}>
+                              {exp.period}
+                              <span style={styles.totalDuration}> · {exp.totalDuration}</span>
+                            </span>
+                            <span 
+                              style={{
+                                ...styles.experienceType,
+                                ...(exp.type === 'Part-time' ? styles.experienceTypePart : 
+                                   exp.type === 'Internship' ? styles.experienceTypeInternship : 
+                                   styles.experienceTypeFull)
+                              }}
+                            >
+                              {exp.type}
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div style={styles.experienceDescription}>
-                    <ul style={styles.responsibilitiesList}>
-                      {exp.responsibilities.map((responsibility, index) => (
-                        <li key={index} style={styles.responsibilityItem}>
-                          {responsibility}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div style={styles.experienceSkills}>
-                    {exp.skills.map((skill, index) => (
-                      <span key={index} style={styles.skillTag}>{skill}</span>
-                    ))}
-                  </div>
+                      <div style={styles.rolesContainer}>
+                        {exp.roles.map((role, roleIndex) => (
+                          <div 
+                            key={roleIndex} 
+                            style={{
+                              ...styles.roleItem,
+                              ...(roleIndex === 0 ? styles.roleItemCurrent : {})
+                            }}
+                            className="role-item"
+                          >
+                            <h3 style={styles.roleTitle} className="role-title">{role.title}</h3>
+                            <div style={styles.roleMeta} className="role-meta">
+                              <span style={styles.rolePeriod}>{role.period}</span>
+                              <span style={styles.roleLocation}>📍 {role.location}</span>
+                            </div>
+                            <div style={styles.roleDescription}>
+                              <ul style={styles.responsibilitiesList}>
+                                {role.responsibilities.map((responsibility, respIndex) => (
+                                  <li key={respIndex} style={styles.responsibilityItem} className="responsibility-item">
+                                    {responsibility}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div style={styles.experienceSkills} className="skills-container">
+                              {role.skills.map((skill, skillIndex) => (
+                                <span key={skillIndex} style={styles.skillTag} className="skill-tag">{skill}</span>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    // Single role experience
+                    <>
+                      <div style={styles.experienceHeader} className="grouped-header">
+                        <div style={styles.companyLogo} className="company-logo">{exp.logo}</div>
+                        <div style={styles.experienceDetails}>
+                          <h3 style={styles.experienceTitle} className="experience-title">{exp.title}</h3>
+                          <h4 style={styles.experienceCompany} className="experience-company">{exp.company}</h4>
+                          <div style={styles.experienceMeta} className="experience-meta">
+                            <span style={styles.experiencePeriod}>{exp.period}</span>
+                            <span style={styles.experienceLocation}>{exp.location}</span>
+                            <span 
+                              style={{
+                                ...styles.experienceType,
+                                ...(exp.type === 'Part-time' ? styles.experienceTypePart : 
+                                   exp.type === 'Internship' ? styles.experienceTypeInternship : 
+                                   styles.experienceTypeFull)
+                              }}
+                            >
+                              {exp.type}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div style={styles.experienceDescription}>
+                        <ul style={styles.responsibilitiesList}>
+                          {exp.responsibilities.map((responsibility, index) => (
+                            <li key={index} style={styles.responsibilityItem} className="responsibility-item">
+                              {responsibility}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div style={styles.experienceSkills} className="skills-container">
+                        {exp.skills.map((skill, index) => (
+                          <span key={index} style={styles.skillTag} className="skill-tag">{skill}</span>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             ))}
@@ -960,12 +1218,13 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.leadershipSection}>
-          <h2 style={styles.sectionTitle}>Leadership & Volunteering</h2>
-          <div style={styles.leadershipGrid}>
+          <h2 style={styles.sectionTitle} className="section-title">Leadership & Volunteering</h2>
+          <div style={styles.leadershipGrid} className="leadership-grid">
             {leadershipRoles.map((role, index) => (
               <div 
                 key={index} 
                 style={styles.leadershipCard}
+                className="leadership-card"
                 onMouseEnter={(e) => handleCardHover(e, true)}
                 onMouseLeave={(e) => handleCardHover(e, false)}
               >
@@ -980,8 +1239,8 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.volunteerSection}>
-          <h2 style={styles.sectionTitle}>Volunteer Work</h2>
-          <div style={styles.volunteerGrid}>
+          <h2 style={styles.sectionTitle} className="section-title">Volunteer Work</h2>
+          <div style={styles.volunteerGrid} className="volunteer-grid">
             {volunteerWork.map((volunteer, index) => (
               <div 
                 key={index} 
@@ -1001,8 +1260,8 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.skillsDeveloped}>
-          <h2 style={styles.sectionTitle}>Skills Developed Through Experience</h2>
-          <div style={styles.skillsCategoriesExp}>
+          <h2 style={styles.sectionTitle} className="section-title">Skills Developed Through Experience</h2>
+          <div style={styles.skillsCategoriesExp} className="skills-categories">
             <div 
               style={styles.skillCategoryExp}
               onMouseEnter={(e) => handleCardHover(e, true)}
@@ -1084,10 +1343,11 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.experienceStats}>
-          <h2 style={styles.sectionTitle}>Experience Metrics</h2>
-          <div style={styles.statsGrid}>
+          <h2 style={styles.sectionTitle} className="section-title">Experience Metrics</h2>
+          <div style={styles.statsGrid} className="stats-grid">
             <div 
               style={styles.statBox}
+              className="stat-box"
               onMouseEnter={(e) => handleCardHover(e, true)}
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
@@ -1096,6 +1356,7 @@ const ExperiencePage = () => {
             </div>
             <div 
               style={styles.statBox}
+              className="stat-box"
               onMouseEnter={(e) => handleCardHover(e, true)}
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
@@ -1104,6 +1365,7 @@ const ExperiencePage = () => {
             </div>
             <div 
               style={styles.statBox}
+              className="stat-box"
               onMouseEnter={(e) => handleCardHover(e, true)}
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
@@ -1112,6 +1374,7 @@ const ExperiencePage = () => {
             </div>
             <div 
               style={styles.statBox}
+              className="stat-box"
               onMouseEnter={(e) => handleCardHover(e, true)}
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
