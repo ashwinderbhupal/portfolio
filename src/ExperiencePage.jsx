@@ -41,7 +41,7 @@ const ExperiencePage = () => {
       id: 1,
       company: "Amazon",
       period: "Oct 2024 - Present",
-      totalDuration: "1 yr 3 mos",
+      totalDuration: "1 yr 5 mos",
       type: "Part-time",
       logo: "📦",
       current: true,
@@ -74,6 +74,29 @@ const ExperiencePage = () => {
     },
     {
       id: 2,
+      title: "Amazon Junior Software Developer",
+      company: "Coursera - Professional Certificate",
+      period: "Jan 2026 - Present",
+      location: "Remote",
+      type: "Professional Development",
+      logo: "🎓",
+      current: true,
+      isGrouped: false,
+      responsibilities: [
+        "Completed Introduction to Software Development course covering software engineering fundamentals, SDLC, and development methodologies",
+        "Currently progressing through Programming with Java course focusing on OOP principles, data types, and control structures",
+        "Building foundational knowledge in Data Structures and Algorithms, Database Management with Java and SQL",
+        "Preparing for Full Stack Web Development, Generative AI in Software Development, and Application Development modules"
+      ],
+      skills: ["Java", "Software Development", "SDLC", "OOP", "Data Structures", "SQL", "Full Stack Development", "AI in Development"],
+      courseProgress: {
+        completed: ["Introduction to Software Development"],
+        inProgress: ["Programming with Java"],
+        upcoming: ["Data Structures and Algorithms", "Database Management with Java and SQL", "Full Stack Web Development", "Generative AI in Software Development", "Application Development"]
+      }
+    },
+    {
+      id: 3,
       title: "Java Development Intern",
       company: "Oasis Infobyte",
       period: "Oct 2025 - Nov 2025",
@@ -94,7 +117,24 @@ const ExperiencePage = () => {
       skills: ["Java", "OOP", "JDBC", "SQL", "JSP/Servlets", "Apache Tomcat", "Git/GitHub", "MVC Architecture", "SDLC"]
     },
     {
-      id: 3,
+      id: 4,
+      title: "Peer Tutor",
+      company: "Middlesex College",
+      period: "Sep 2023 - May 2024",
+      location: "Edison, New Jersey",
+      type: "Part-time",
+      logo: "👨‍🏫",
+      current: false,
+      isGrouped: false,
+      responsibilities: [
+        "Mentored a group of 26 students in Java, Data Structures, and web fundamentals with hands-on sessions and guides",
+        "Led workshops on recursion, Big-O notation, and debugging techniques to strengthen problem-solving skills",
+        "Introduced JUnit test-driven development practices for higher code quality and better testing habits"
+      ],
+      skills: ["Java", "Data Structures", "Web Fundamentals", "Mentoring", "Test-Driven Development", "Technical Communication"]
+    },
+    {
+      id: 5,
       title: "Dietary Management",
       company: "Robert Wood Johnson Hospital",
       period: "Apr 2023 - Sept 2024",
@@ -168,7 +208,7 @@ const ExperiencePage = () => {
           years: 2,
           leadership: 4,
           organizations: 6,
-          mentored: 12
+          mentored: 26
         });
       }, 800);
     }, 200);
@@ -511,6 +551,12 @@ const ExperiencePage = () => {
       background: `${colors.accent}15`,
       color: colors.accentDark,
       border: `1px solid ${colors.accent}30`
+    },
+
+    experienceTypeProfessional: {
+      background: `${colors.gradient2}15`,
+      color: colors.gradient2,
+      border: `1px solid ${colors.gradient2}30`
     },
 
     // Grouped experience styles
@@ -1129,7 +1175,8 @@ const ExperiencePage = () => {
                               style={{
                                 ...styles.experienceType,
                                 ...(exp.type === 'Part-time' ? styles.experienceTypePart : 
-                                   exp.type === 'Internship' ? styles.experienceTypeInternship : 
+                                   exp.type === 'Internship' ? styles.experienceTypeInternship :
+                                   exp.type === 'Professional Development' ? styles.experienceTypeProfessional : 
                                    styles.experienceTypeFull)
                               }}
                             >
@@ -1186,7 +1233,8 @@ const ExperiencePage = () => {
                               style={{
                                 ...styles.experienceType,
                                 ...(exp.type === 'Part-time' ? styles.experienceTypePart : 
-                                   exp.type === 'Internship' ? styles.experienceTypeInternship : 
+                                   exp.type === 'Internship' ? styles.experienceTypeInternship :
+                                   exp.type === 'Professional Development' ? styles.experienceTypeProfessional : 
                                    styles.experienceTypeFull)
                               }}
                             >
@@ -1378,7 +1426,7 @@ const ExperiencePage = () => {
               onMouseEnter={(e) => handleCardHover(e, true)}
               onMouseLeave={(e) => handleCardHover(e, false)}
             >
-              <div style={styles.statValue(animatedStats.mentored, true)}>12+</div>
+              <div style={styles.statValue(animatedStats.mentored, true)}>26+</div>
               <div style={styles.statDescription}>Students Mentored</div>
             </div>
           </div>
