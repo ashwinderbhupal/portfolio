@@ -1,29 +1,25 @@
-name: Deploy to GitHub Pages (private ➜ public)
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]     # run when you push to main
-  workflow_dispatch:        # allow manual runs
+    branches: [ main ]
+  workflow_dispatch:
 
-# prevent overlapping deploys
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 concurrency:
   group: pages
   cancel-in-progress: true
 
-# we only need read access in the private repo;
-# pushing to the public repo uses your PAT secret (below)
-permissions:
-  contents: read
-
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -31,25 +27,27 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build (Vite)
-        env:
-          # With a custom domain, the site is served from root.
-          # Ensure vite.config.js uses base: '/' (or reads this env).
-          VITE_BASE: /
-        run: |
-          npm run build
-          # SPA fallback for React Router
-          cp dist/index.html dist/404.html
+      - name: Build
+        run: npm run build
 
-      - name: Deploy to public repo (portfolio-pages)
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          personal_token: ${{ secrets.PAGES_TOKEN }}         # <-- add this secret in the private repo
-          external_repository: ashwinder9693/portfolio-pages
-          publish_dir: dist
-          publish_branch: gh-pages
-          cname: onlyjobs.work                               # writes CNAME into gh-pages
-          force_orphan: true                                 # clean history on gh-pages
+          path: './dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
