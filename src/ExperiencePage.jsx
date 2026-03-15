@@ -6,34 +6,22 @@ const ExperiencePage = () => {
   const [animatedStats, setAnimatedStats] = useState({});
   const particleCanvasRef = useRef(null);
 
-  // Professional color palette matching other pages
+  // Clean, minimal color palette
   const colors = {
-    primary: '#2563eb',
-    primaryDark: '#1e40af',
-    primaryLight: '#3b82f6',
-    secondary: '#64748b',
-    accent: '#06b6d4',
-    accentDark: '#0891b2',
-    background: '#f8fafc',
-    backgroundAlt: '#f1f5f9',
+    primary: '#0f172a',
+    primaryLight: '#334155',
+    accent: '#3b82f6',
+    accentLight: '#60a5fa',
+    background: '#ffffff',
+    backgroundAlt: '#f8fafc',
     cardBg: '#ffffff',
-    cardBgAlt: 'rgba(255, 255, 255, 0.9)',
-    text: '#1e293b',
-    textLight: '#64748b',
+    text: '#0f172a',
+    textLight: '#475569',
     textMuted: '#94a3b8',
     border: '#e2e8f0',
-    borderLight: '#f1f5f9',
-    shadow: 'rgba(15, 23, 42, 0.08)',
-    shadowMedium: 'rgba(15, 23, 42, 0.12)',
-    shadowHeavy: 'rgba(15, 23, 42, 0.25)',
-    gradient1: '#6366f1',
-    gradient2: '#8b5cf6',
-    gradient3: '#ec4899',
-    gradient4: '#06b6d4',
-    success: '#10b981',
+    success: '#22c55e',
     warning: '#f59e0b',
-    glassBg: 'rgba(255, 255, 255, 0.9)',
-    glassBorder: 'rgba(255, 255, 255, 0.2)'
+    purple: '#8b5cf6'
   };
 
   const experiences = [
@@ -304,220 +292,149 @@ const ExperiencePage = () => {
     };
   };
 
-  // Comprehensive styles
+  // Clean, minimal styles
   const styles = {
     experiencePage: {
-      background: `
-        linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #ffffff 75%, #f8fafc 100%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
-      `,
+      background: colors.background,
       minHeight: '100vh',
-      position: 'relative',
-      overflow: 'hidden',
+      width: '100%',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      paddingTop: '85px'
+      paddingTop: '60px',
+      paddingBottom: '60px',
+      boxSizing: 'border-box'
     },
 
     particleCanvas: {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      pointerEvents: 'none',
-      zIndex: 1
+      display: 'none'
     },
 
     container: {
-      maxWidth: '1400px',
-      margin: '0 auto',
-      padding: '0 1rem',
-      position: 'relative',
-      zIndex: 2,
-      '@media (min-width: 768px)': {
-        padding: '0 2rem'
-      }
-    },
-
-    floatingShapes: {
-      position: 'absolute',
       width: '100%',
-      height: '100%',
-      top: 0,
-      left: 0,
-      overflow: 'hidden',
-      zIndex: 0
+      maxWidth: '960px',
+      margin: '0 auto',
+      padding: '0 12px',
+      boxSizing: 'border-box'
     },
-
-    shape: (i) => ({
-      position: 'absolute',
-      borderRadius: ['50%', '20%', '30%', '40%'][i % 4],
-      background: [
-        `linear-gradient(45deg, ${colors.gradient1}08, ${colors.gradient2}05)`,
-        `linear-gradient(135deg, ${colors.gradient2}06, ${colors.gradient3}04)`,
-        `linear-gradient(225deg, ${colors.gradient3}10, ${colors.gradient4}06)`,
-        `linear-gradient(315deg, ${colors.gradient4}08, ${colors.gradient1}05)`
-      ][i % 4],
-      animation: `float-${i % 4} ${16 + (i % 3) * 2}s ease-in-out infinite`,
-      backdropFilter: 'blur(1px)',
-      width: `${5 + (i % 6) * 3}px`,
-      height: `${5 + (i % 6) * 3}px`,
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      opacity: 0.1,
-      transform: `translate(${mousePosition.x * 0.002 * ((i % 3) + 1)}px, ${mousePosition.y * 0.002 * ((i % 3) + 1)}px)`,
-      transition: 'transform 0.3s ease-out'
-    }),
 
     experienceHero: {
       textAlign: 'center',
-      padding: '2rem 0 3rem 0',
+      marginBottom: '40px',
       opacity: isVisible ? 1 : 0,
-      transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-      transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)'
+      transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+      transition: 'all 0.6s ease'
     },
 
     pageTitle: {
-      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-      fontWeight: '900',
-      background: `
-        linear-gradient(
-          135deg, 
-          ${colors.text} 0%, 
-          ${colors.primary} 25%, 
-          ${colors.gradient2} 50%, 
-          ${colors.accent} 75%, 
-          ${colors.gradient1} 100%
-        )
-      `,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
+      fontSize: 'clamp(2.8rem, 7vw, 3.8rem)',
+      fontWeight: '700',
+      color: colors.text,
       letterSpacing: '-0.02em',
-      lineHeight: '1.1',
-      marginBottom: '1.5rem',
-      backgroundSize: '400% 400%',
-      animation: 'gradientShift 8s ease-in-out infinite'
+      marginBottom: '12px'
     },
 
     pageSubtitle: {
-      fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-      lineHeight: '1.7',
-      color: colors.textLight,
-      maxWidth: '700px',
-      margin: '0 auto',
-      fontWeight: '400'
+      fontSize: '0.95rem',
+      color: colors.textMuted,
+      fontWeight: '400',
+      maxWidth: '540px',
+      margin: '0 auto'
     },
 
     sectionTitle: {
-      fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
-      fontWeight: '700',
-      background: `linear-gradient(135deg, ${colors.text} 0%, ${colors.primary} 50%, ${colors.accent} 100%)`,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      textAlign: 'center',
-      marginBottom: '2rem',
-      letterSpacing: '-0.02em'
+      fontSize: '1.3rem',
+      fontWeight: '650',
+      color: colors.text,
+      marginTop: '8px',
+      marginBottom: '24px',
+      paddingBottom: '12px',
+      borderBottom: `2px solid ${colors.border}`
     },
 
     experienceTimeline: {
-      marginBottom: '3rem'
+      marginBottom: '48px',
+      width: '100%'
     },
 
     timeline: {
-      position: 'relative',
-      maxWidth: '1000px',
-      margin: '0 auto',
-      paddingLeft: '0.5rem'
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      gap: '16px',
+      width: '100%'
     },
 
     timelineItem: {
-      position: 'relative',
-      marginBottom: '2rem'
+      width: '100%'
     },
 
     timelineContent: {
       background: colors.cardBg,
-      borderRadius: '20px',
-      padding: '1.5rem',
-      boxShadow: `
-        0 15px 40px rgba(15, 23, 42, 0.08),
-        0 6px 20px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      borderRadius: '12px',
+      padding: '16px',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-      backdropFilter: 'blur(20px)',
-      position: 'relative'
+      width: '100%',
+      boxSizing: 'border-box'
     },
 
     experienceHeader: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '1rem',
-      marginBottom: '1.5rem',
-      flexWrap: 'wrap'
+      gap: '12px',
+      marginBottom: '14px'
     },
 
     companyLogo: {
-      fontSize: '2.5rem',
-      filter: 'drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3))',
+      fontSize: '1.25rem',
+      width: '36px',
+      height: '36px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: colors.backgroundAlt,
+      borderRadius: '8px',
       flexShrink: 0
     },
 
     experienceDetails: {
       flex: 1,
-      textAlign: 'left'
+      minWidth: 0
     },
 
     experienceTitle: {
-      fontSize: '1.3rem',
-      fontWeight: '700',
+      fontSize: '1rem',
+      fontWeight: '600',
       color: colors.text,
-      marginBottom: '0.5rem',
-      lineHeight: '1.3',
-      textAlign: 'left'
+      marginBottom: '4px',
+      lineHeight: '1.3'
     },
 
     experienceCompany: {
-      fontSize: '1.1rem',
-      fontWeight: '600',
-      color: colors.primary,
-      marginBottom: '0.75rem',
-      textAlign: 'left'
+      fontSize: '0.9rem',
+      fontWeight: '500',
+      color: colors.accent,
+      marginBottom: '4px'
     },
 
     experienceMeta: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '0.5rem',
-      alignItems: 'flex-start',
-      flexDirection: 'column'
+      gap: '6px 12px',
+      alignItems: 'center'
     },
 
     experiencePeriod: {
       color: colors.textMuted,
-      fontSize: '0.9rem',
-      fontWeight: '500'
+      fontSize: '0.8rem'
     },
 
     experienceLocation: {
-      color: colors.textLight,
-      fontSize: '0.9rem',
-      fontWeight: '500',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.3rem',
-      '&::before': {
-        content: '"📍"',
-        fontSize: '0.8rem'
-      }
+      color: colors.textMuted,
+      fontSize: '0.8rem'
     },
 
     experienceType: {
-      padding: '0.3rem 0.8rem',
-      borderRadius: '20px',
-      fontSize: '0.8rem',
+      padding: '4px 10px',
+      borderRadius: '6px',
+      fontSize: '0.7rem',
       fontWeight: '600',
       textTransform: 'uppercase',
       letterSpacing: '0.5px'
@@ -525,454 +442,408 @@ const ExperiencePage = () => {
 
     experienceTypePart: {
       background: `${colors.warning}15`,
-      color: colors.warning,
-      border: `1px solid ${colors.warning}30`
+      color: '#b45309'
     },
 
     experienceTypeFull: {
       background: `${colors.success}15`,
-      color: colors.success,
-      border: `1px solid ${colors.success}30`
+      color: '#15803d'
     },
 
     experienceTypeInternship: {
       background: `${colors.accent}15`,
-      color: colors.accentDark,
-      border: `1px solid ${colors.accent}30`
+      color: '#1d4ed8'
     },
 
     experienceTypeProfessional: {
-      background: `${colors.gradient2}15`,
-      color: colors.gradient2,
-      border: `1px solid ${colors.gradient2}30`
+      background: `${colors.purple}15`,
+      color: '#7c3aed'
     },
 
     // Grouped experience styles
     groupedHeader: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '1rem',
-      marginBottom: '1rem',
-      paddingBottom: '1rem',
-      borderBottom: `1px solid ${colors.border}`,
-      flexWrap: 'wrap'
+      gap: '12px',
+      marginBottom: '14px',
+      paddingBottom: '14px',
+      borderBottom: `1px solid ${colors.border}`
     },
 
     totalDuration: {
       color: colors.textMuted,
-      fontSize: '0.85rem',
-      fontWeight: '500',
-      marginLeft: '0.5rem'
+      fontSize: '0.8rem',
+      marginLeft: '4px'
     },
 
     rolesContainer: {
       display: 'flex',
       flexDirection: 'column',
-      gap: '2rem'
+      gap: '20px'
     },
 
     roleItem: {
-      position: 'relative',
-      paddingLeft: '1rem',
-      borderLeft: `3px solid ${colors.primary}30`
+      paddingLeft: '14px',
+      borderLeft: `2px solid ${colors.border}`
     },
 
     roleItemCurrent: {
-      borderLeft: `3px solid ${colors.primary}`
+      borderLeft: `2px solid ${colors.accent}`
     },
 
     roleTitle: {
-      fontSize: '1.1rem',
+      fontSize: '0.95rem',
       fontWeight: '600',
       color: colors.text,
-      marginBottom: '0.5rem',
-      textAlign: 'left'
+      marginBottom: '4px'
     },
 
     roleMeta: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '0.5rem',
-      alignItems: 'flex-start',
-      marginBottom: '0.75rem',
-      flexDirection: 'column'
+      gap: '4px 12px',
+      alignItems: 'center',
+      marginBottom: '10px'
     },
 
     rolePeriod: {
       color: colors.textMuted,
-      fontSize: '0.85rem',
-      fontWeight: '500'
+      fontSize: '0.8rem'
     },
 
     roleLocation: {
-      color: colors.textLight,
-      fontSize: '0.85rem',
-      fontWeight: '500',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.3rem'
+      color: colors.textMuted,
+      fontSize: '0.8rem'
     },
 
     roleDescription: {
-      marginBottom: '1rem',
-      textAlign: 'left'
+      marginBottom: '12px'
     },
 
     experienceDescription: {
-      marginBottom: '2rem',
-      textAlign: 'left'
+      marginBottom: '16px'
     },
 
     responsibilitiesList: {
       listStyle: 'none',
       padding: 0,
-      margin: 0,
-      textAlign: 'left'
+      margin: 0
     },
 
     responsibilityItem: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '0.75rem',
-      marginBottom: '0.875rem',
+      gap: '8px',
+      marginBottom: '8px',
       color: colors.textLight,
-      lineHeight: '1.6',
-      textAlign: 'left'
+      fontSize: '0.85rem',
+      lineHeight: '1.5'
     },
 
     responsibilityBullet: {
-      color: colors.primary,
-      fontWeight: '600',
+      color: colors.accent,
       flexShrink: 0,
-      marginTop: '0.1rem',
-      fontSize: '0.9rem'
+      marginTop: '6px',
+      fontSize: '0.4rem'
     },
 
     responsibilityText: {
-      flex: 1,
-      textAlign: 'left'
+      flex: 1
     },
 
     experienceSkills: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '0.5rem',
-      justifyContent: 'flex-start'
+      gap: '6px'
     },
 
     milestonesSection: {
-      marginBottom: '1.5rem',
-      padding: '1rem',
-      background: `linear-gradient(135deg, ${colors.success}08, ${colors.primary}05)`,
-      borderRadius: '12px',
-      border: `1px solid ${colors.success}20`
+      marginBottom: '16px',
+      padding: '12px',
+      background: `${colors.success}06`,
+      borderRadius: '8px',
+      border: `1px solid ${colors.success}15`
     },
 
     milestonesTitle: {
-      fontSize: '0.9rem',
+      fontSize: '0.8rem',
       fontWeight: '600',
       color: colors.text,
-      marginBottom: '0.75rem',
+      marginBottom: '10px',
       display: 'flex',
       alignItems: 'center',
-      gap: '0.5rem'
+      gap: '6px'
     },
 
     milestoneItem: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '0.75rem',
-      padding: '0.75rem',
+      gap: '10px',
+      padding: '10px',
       background: colors.cardBg,
-      borderRadius: '8px',
-      marginBottom: '0.5rem',
+      borderRadius: '6px',
       border: `1px solid ${colors.border}`
     },
 
     milestoneIcon: {
-      width: '24px',
-      height: '24px',
+      width: '18px',
+      height: '18px',
       borderRadius: '50%',
       background: colors.success,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       color: '#fff',
-      fontSize: '0.75rem',
-      flexShrink: 0
+      fontSize: '0.6rem',
+      flexShrink: 0,
+      marginTop: '2px'
     },
 
     milestoneContent: {
-      flex: 1,
-      textAlign: 'left'
+      flex: 1
     },
 
     milestoneHeader: {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: '0.25rem',
+      alignItems: 'flex-start',
+      marginBottom: '4px',
       flexWrap: 'wrap',
-      gap: '0.5rem'
+      gap: '6px'
     },
 
     milestoneName: {
-      fontSize: '0.9rem',
+      fontSize: '0.85rem',
       fontWeight: '600',
       color: colors.text
     },
 
     milestoneDate: {
-      fontSize: '0.75rem',
-      color: colors.textMuted,
-      fontWeight: '500'
+      fontSize: '0.7rem',
+      color: colors.textMuted
     },
 
     milestoneDescription: {
-      fontSize: '0.85rem',
+      fontSize: '0.75rem',
       color: colors.textLight,
-      lineHeight: '1.5'
+      lineHeight: '1.4'
     },
 
     milestoneBadge: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '0.25rem',
-      padding: '0.2rem 0.5rem',
-      background: `${colors.success}15`,
-      color: colors.success,
-      borderRadius: '12px',
-      fontSize: '0.7rem',
+      padding: '2px 6px',
+      background: `${colors.success}12`,
+      color: '#15803d',
+      borderRadius: '4px',
+      fontSize: '0.6rem',
       fontWeight: '600',
       textTransform: 'uppercase'
     },
 
     skillTag: {
-      background: `${colors.primary}10`,
-      color: colors.primary,
-      padding: '0.3rem 0.7rem',
-      borderRadius: '20px',
+      background: colors.backgroundAlt,
+      color: colors.textLight,
+      padding: '4px 10px',
+      borderRadius: '4px',
       fontSize: '0.75rem',
-      fontWeight: '500',
-      border: `1px solid ${colors.primary}20`
+      fontWeight: '500'
     },
 
     leadershipSection: {
-      marginBottom: '3rem'
+      marginBottom: '48px',
+      width: '100%'
     },
 
     leadershipGrid: {
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gap: '1.5rem'
+      gap: '16px',
+      width: '100%'
     },
 
     leadershipCard: {
       background: colors.cardBg,
-      borderRadius: '20px',
-      padding: '1.5rem',
-      boxShadow: `
-        0 15px 40px rgba(15, 23, 42, 0.08),
-        0 6px 20px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      borderRadius: '12px',
+      padding: '20px',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-      backdropFilter: 'blur(20px)',
-      textAlign: 'center'
+      display: 'flex',
+      gap: '16px',
+      alignItems: 'flex-start',
+      width: '100%'
     },
 
     leadershipIcon: {
-      fontSize: '3rem',
-      marginBottom: '1.5rem',
-      display: 'block',
-      filter: 'drop-shadow(0 4px 8px rgba(99, 102, 241, 0.3))'
+      fontSize: '1.5rem',
+      width: '40px',
+      height: '40px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: colors.backgroundAlt,
+      borderRadius: '8px',
+      flexShrink: 0
+    },
+
+    leadershipContent: {
+      flex: 1
     },
 
     leadershipTitle: {
-      fontSize: '1.3rem',
-      fontWeight: '700',
+      fontSize: '1rem',
+      fontWeight: '600',
       color: colors.text,
-      marginBottom: '0.5rem',
-      lineHeight: '1.3'
+      marginBottom: '4px'
     },
 
     leadershipOrganization: {
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       fontWeight: '500',
-      color: colors.primary,
-      marginBottom: '1rem'
+      color: colors.accent,
+      marginBottom: '4px'
     },
 
     leadershipPeriod: {
       color: colors.textMuted,
-      fontSize: '0.9rem',
-      fontWeight: '500',
-      marginBottom: '1.5rem',
+      fontSize: '0.8rem',
+      marginBottom: '8px',
       display: 'block'
     },
 
     leadershipDescription: {
       color: colors.textLight,
-      lineHeight: '1.6',
-      fontSize: '0.95rem',
-      textAlign: 'left'
+      lineHeight: '1.5',
+      fontSize: '0.85rem'
     },
 
     volunteerSection: {
-      marginBottom: '3rem'
+      marginBottom: '48px',
+      width: '100%'
     },
 
     volunteerGrid: {
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gap: '1.5rem',
-      maxWidth: '800px',
-      margin: '0 auto'
+      gap: '16px',
+      width: '100%'
     },
 
     volunteerCard: {
       background: colors.cardBg,
-      borderRadius: '16px',
-      padding: '1.25rem',
-      boxShadow: `
-        0 12px 30px rgba(15, 23, 42, 0.08),
-        0 5px 15px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      borderRadius: '12px',
+      padding: '20px',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-      backdropFilter: 'blur(20px)'
+      width: '100%',
+      boxSizing: 'border-box'
     },
 
     volunteerHeader: {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
-      marginBottom: '1rem',
+      marginBottom: '8px',
       flexWrap: 'wrap',
-      gap: '0.5rem'
+      gap: '8px'
     },
 
     volunteerOrganization: {
-      fontSize: '1.2rem',
+      fontSize: '1rem',
       fontWeight: '600',
-      color: colors.text,
-      lineHeight: '1.3'
+      color: colors.text
     },
 
     volunteerPeriod: {
       color: colors.textMuted,
-      fontSize: '0.85rem',
-      fontWeight: '500'
+      fontSize: '0.8rem'
     },
 
     volunteerRole: {
-      fontSize: '1rem',
+      fontSize: '0.9rem',
       fontWeight: '500',
-      color: colors.primary,
-      marginBottom: '1rem'
+      color: colors.accent,
+      marginBottom: '8px'
     },
 
     volunteerDescription: {
       color: colors.textLight,
-      lineHeight: '1.6',
-      fontSize: '0.95rem'
+      lineHeight: '1.5',
+      fontSize: '0.85rem'
     },
 
     skillsDeveloped: {
-      marginBottom: '3rem'
+      marginBottom: '48px',
+      width: '100%'
     },
 
     skillsCategoriesExp: {
       display: 'grid',
       gridTemplateColumns: '1fr',
-      gap: '1.5rem'
+      gap: '16px',
+      width: '100%'
     },
 
     skillCategoryExp: {
       background: colors.cardBg,
-      borderRadius: '16px',
-      padding: '1.5rem',
-      boxShadow: `
-        0 15px 40px rgba(15, 23, 42, 0.08),
-        0 6px 20px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      borderRadius: '12px',
+      padding: '20px',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-      backdropFilter: 'blur(20px)'
+      width: '100%',
+      boxSizing: 'border-box'
     },
 
     skillCategoryTitle: {
-      fontSize: '1.3rem',
-      fontWeight: '700',
+      fontSize: '1rem',
+      fontWeight: '600',
       color: colors.text,
-      marginBottom: '2rem',
-      textAlign: 'center'
+      marginBottom: '16px'
     },
 
     skillsList: {
       display: 'flex',
-      flexDirection: 'column',
-      gap: '0.8rem'
+      flexWrap: 'wrap',
+      gap: '8px'
     },
 
     skillsListItem: {
-      background: `${colors.primary}08`,
-      color: colors.text,
-      padding: '0.8rem 1.2rem',
-      borderRadius: '12px',
-      fontSize: '0.9rem',
-      fontWeight: '500',
-      border: `1px solid ${colors.primary}15`,
-      transition: 'all 0.3s ease'
+      background: colors.backgroundAlt,
+      color: colors.textLight,
+      padding: '6px 12px',
+      borderRadius: '6px',
+      fontSize: '0.8rem',
+      fontWeight: '500'
     },
 
     experienceStats: {
-      marginBottom: '4rem'
+      marginBottom: '48px',
+      width: '100%'
     },
 
     statsGrid: {
       display: 'grid',
       gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: '1rem',
-      maxWidth: '800px',
-      margin: '0 auto'
+      gap: '16px',
+      width: '100%'
     },
 
     statBox: {
       background: colors.cardBg,
-      borderRadius: '16px',
-      padding: '1.25rem 1rem',
-      boxShadow: `
-        0 12px 30px rgba(15, 23, 42, 0.08),
-        0 5px 15px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      borderRadius: '12px',
+      padding: '20px',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-      backdropFilter: 'blur(20px)',
-      textAlign: 'center'
+      textAlign: 'center',
+      width: '100%',
+      boxSizing: 'border-box'
     },
 
-    statValue: (value, isAnimated) => ({
-      fontSize: 'clamp(2rem, 5vw, 2.8rem)',
-      fontWeight: '800',
-      background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.accent} 100%)`,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      marginBottom: '0.5rem',
-      display: 'block',
-      position: 'relative',
-      transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+    statValue: () => ({
+      fontSize: '2rem',
+      fontWeight: '700',
+      color: colors.accent,
+      marginBottom: '4px',
+      display: 'block'
     }),
 
     statDescription: {
       color: colors.textLight,
-      fontSize: '0.9rem',
-      fontWeight: '500',
-      lineHeight: '1.4'
+      fontSize: '0.85rem'
     }
   };
 
@@ -1034,184 +905,55 @@ const ExperiencePage = () => {
       
       <style>
         {`
-          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
           
-          @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-          }
-          
-          @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
-          }
-          
-          @keyframes float-0 {
-            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
-            25% { transform: translate(8px, -8px) rotate(90deg) scale(1.01); }
-            50% { transform: translate(12px, 0px) rotate(180deg) scale(1); }
-            75% { transform: translate(4px, 8px) rotate(270deg) scale(0.99); }
-          }
-          
-          @keyframes float-1 {
-            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
-            25% { transform: translate(-10px, 10px) rotate(-90deg) scale(0.96); }
-            50% { transform: translate(0px, 18px) rotate(-180deg) scale(1.04); }
-            75% { transform: translate(10px, 10px) rotate(-270deg) scale(1); }
-          }
-          
-          @keyframes float-2 {
-            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
-            33% { transform: translate(12px, -4px) rotate(120deg) scale(1.01); }
-            66% { transform: translate(-4px, 12px) rotate(240deg) scale(0.99); }
-          }
-          
-          @keyframes float-3 {
-            0%, 100% { transform: translate(0px, 0px) rotate(0deg) scale(1); }
-            50% { transform: translate(-8px, -8px) rotate(-180deg) scale(1.02); }
-          }
-          
-          * {
-            box-sizing: border-box;
-          }
-          
-          html {
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: transparent;
+          *, *::before, *::after { 
+            box-sizing: border-box; 
           }
           
           body {
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
           }
           
-          /* Mobile Responsive Styles */
-          @media (max-width: 767px) {
-            body {
-              font-size: 16px;
-            }
-            
-            .experience-timeline-wrapper {
-              padding-left: 0 !important;
-            }
-            
-            .timeline-item {
-              padding-left: 0 !important;
-              margin-bottom: 1.5rem !important;
-            }
-            
-            .timeline-content {
-              padding: 1.25rem !important;
-              border-radius: 16px !important;
-            }
-            
-            .grouped-header {
-              flex-direction: column !important;
-              gap: 1rem !important;
-              padding-bottom: 1rem !important;
-              margin-bottom: 1rem !important;
-            }
-            
-            .company-logo {
-              font-size: 2rem !important;
-            }
-            
-            .experience-meta {
-              flex-direction: column !important;
-              align-items: flex-start !important;
-              gap: 0.5rem !important;
-            }
-            
-            .role-item {
-              padding-left: 1rem !important;
-            }
-            
-            .role-meta {
-              flex-direction: column !important;
-              align-items: flex-start !important;
-              gap: 0.5rem !important;
-            }
-            
-            .skills-container {
-              gap: 0.4rem !important;
-            }
-            
-            .skill-tag {
-              padding: 0.3rem 0.6rem !important;
-              font-size: 0.75rem !important;
-            }
-            
-            .leadership-grid {
-              grid-template-columns: 1fr !important;
-              gap: 1.5rem !important;
-            }
-            
-            .leadership-card {
-              padding: 1.5rem !important;
-            }
-            
-            .volunteer-grid {
-              grid-template-columns: 1fr !important;
-            }
-            
-            .skills-categories {
-              grid-template-columns: 1fr !important;
-            }
-            
-            .stats-grid {
-              grid-template-columns: repeat(2, 1fr) !important;
-              gap: 1rem !important;
-            }
-            
-            .stat-box {
-              padding: 1.25rem 1rem !important;
-            }
-            
-            .section-title {
-              font-size: 1.5rem !important;
-              margin-bottom: 2rem !important;
-            }
+          /* Force all experience timeline items to full width */
+          .exp-timeline-item,
+          .exp-timeline-content,
+          .leadership-card {
+            width: 100% !important;
+            box-sizing: border-box !important;
           }
           
-          @media (max-width: 480px) {
-            .timeline-item {
-              padding-left: 0 !important;
+          /* Mobile styles */
+          @media (max-width: 640px) {
+            .exp-timeline-content { 
+              padding: 14px !important; 
             }
-            
-            .timeline-content {
-              padding: 1rem !important;
+            .company-logo {
+              width: 36px !important;
+              height: 36px !important;
+              min-width: 36px !important;
+              font-size: 1.2rem !important;
             }
-            
             .experience-title {
-              font-size: 1.1rem !important;
+              font-size: 0.9rem !important;
             }
-            
             .experience-company {
-              font-size: 1rem !important;
+              font-size: 0.8rem !important;
             }
-            
-            .role-title {
-              font-size: 1rem !important;
-            }
-            
             .responsibility-item {
-              font-size: 0.85rem !important;
-              line-height: 1.5 !important;
+              font-size: 0.8rem !important;
+            }
+            .skill-tag {
+              font-size: 0.65rem !important;
+              padding: 3px 6px !important;
             }
           }
         `}
       </style>
-
-      {/* Floating background shapes */}
-      <div style={styles.floatingShapes}>
-        {[...Array(14)].map((_, i) => (
-          <div key={i} style={styles.shape(i)}></div>
-        ))}
-      </div>
 
       <div style={styles.container}>
         <div style={styles.experienceHero}>
@@ -1225,10 +967,10 @@ const ExperiencePage = () => {
           <h2 style={styles.sectionTitle} className="section-title">Professional Experience</h2>
           <div style={styles.timeline}>
             {experiences.map((exp) => (
-              <div key={exp.id} style={styles.timelineItem} className="timeline-item">
+              <div key={exp.id} style={styles.timelineItem} className="exp-timeline-item">
                 <div 
                   style={styles.timelineContent}
-                  className="timeline-content"
+                  className="exp-timeline-content"
                   onMouseEnter={(e) => handleTimelineHover(e, true)}
                   onMouseLeave={(e) => handleTimelineHover(e, false)}
                 >
@@ -1364,36 +1106,27 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.leadershipSection}>
-          <h2 style={styles.sectionTitle} className="section-title">Leadership & Volunteering</h2>
+          <h2 style={styles.sectionTitle}>Leadership & Volunteering</h2>
           <div style={styles.leadershipGrid} className="leadership-grid">
             {leadershipRoles.map((role, index) => (
-              <div 
-                key={index} 
-                style={styles.leadershipCard}
-                className="leadership-card"
-                onMouseEnter={(e) => handleCardHover(e, true)}
-                onMouseLeave={(e) => handleCardHover(e, false)}
-              >
+              <div key={index} style={styles.leadershipCard} className="leadership-card">
                 <div style={styles.leadershipIcon}>{role.icon}</div>
-                <h3 style={styles.leadershipTitle}>{role.title}</h3>
-                <h4 style={styles.leadershipOrganization}>{role.organization}</h4>
-                <span style={styles.leadershipPeriod}>{role.period}</span>
-                <p style={styles.leadershipDescription}>{role.description}</p>
+                <div style={styles.leadershipContent}>
+                  <h3 style={styles.leadershipTitle}>{role.title}</h3>
+                  <h4 style={styles.leadershipOrganization}>{role.organization}</h4>
+                  <span style={styles.leadershipPeriod}>{role.period}</span>
+                  <p style={styles.leadershipDescription}>{role.description}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
         <div style={styles.volunteerSection}>
-          <h2 style={styles.sectionTitle} className="section-title">Volunteer Work</h2>
-          <div style={styles.volunteerGrid} className="volunteer-grid">
+          <h2 style={styles.sectionTitle}>Volunteer Work</h2>
+          <div style={styles.volunteerGrid}>
             {volunteerWork.map((volunteer, index) => (
-              <div 
-                key={index} 
-                style={styles.volunteerCard}
-                onMouseEnter={(e) => handleCardHover(e, true)}
-                onMouseLeave={(e) => handleCardHover(e, false)}
-              >
+              <div key={index} style={styles.volunteerCard}>
                 <div style={styles.volunteerHeader}>
                   <h3 style={styles.volunteerOrganization}>{volunteer.organization}</h3>
                   <span style={styles.volunteerPeriod}>{volunteer.period}</span>
@@ -1406,82 +1139,29 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.skillsDeveloped}>
-          <h2 style={styles.sectionTitle} className="section-title">Skills Developed Through Experience</h2>
-          <div style={styles.skillsCategoriesExp} className="skills-categories">
-            <div 
-              style={styles.skillCategoryExp}
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
+          <h2 style={styles.sectionTitle}>Skills Developed</h2>
+          <div style={styles.skillsCategoriesExp}>
+            <div style={styles.skillCategoryExp}>
               <h3 style={styles.skillCategoryTitle}>Technical Skills</h3>
               <div style={styles.skillsList}>
-                {[
-                  "Data Analysis & Optimization",
-                  "Inventory Management Systems",
-                  "Process Digitization",
-                  "Supply Chain Management",
-                  "Healthcare Information Systems"
-                ].map((skill, index) => (
-                  <div 
-                    key={index} 
-                    style={styles.skillsListItem}
-                    onMouseEnter={(e) => handleSkillHover(e, true)}
-                    onMouseLeave={(e) => handleSkillHover(e, false)}
-                  >
-                    {skill}
-                  </div>
+                {["Data Analysis", "Inventory Systems", "Process Digitization", "Supply Chain", "Healthcare IT"].map((skill, index) => (
+                  <div key={index} style={styles.skillsListItem}>{skill}</div>
                 ))}
               </div>
             </div>
-
-            <div 
-              style={styles.skillCategoryExp}
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
+            <div style={styles.skillCategoryExp}>
               <h3 style={styles.skillCategoryTitle}>Leadership Skills</h3>
               <div style={styles.skillsList}>
-                {[
-                  "Team Management",
-                  "Project Coordination",
-                  "Strategic Planning",
-                  "Mentoring & Coaching",
-                  "Event Organization"
-                ].map((skill, index) => (
-                  <div 
-                    key={index} 
-                    style={styles.skillsListItem}
-                    onMouseEnter={(e) => handleSkillHover(e, true)}
-                    onMouseLeave={(e) => handleSkillHover(e, false)}
-                  >
-                    {skill}
-                  </div>
+                {["Team Management", "Project Coordination", "Strategic Planning", "Mentoring", "Event Organization"].map((skill, index) => (
+                  <div key={index} style={styles.skillsListItem}>{skill}</div>
                 ))}
               </div>
             </div>
-
-            <div 
-              style={styles.skillCategoryExp}
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
+            <div style={styles.skillCategoryExp}>
               <h3 style={styles.skillCategoryTitle}>Soft Skills</h3>
               <div style={styles.skillsList}>
-                {[
-                  "Communication",
-                  "Problem Solving",
-                  "Adaptability",
-                  "Time Management",
-                  "Critical Thinking"
-                ].map((skill, index) => (
-                  <div 
-                    key={index} 
-                    style={styles.skillsListItem}
-                    onMouseEnter={(e) => handleSkillHover(e, true)}
-                    onMouseLeave={(e) => handleSkillHover(e, false)}
-                  >
-                    {skill}
-                  </div>
+                {["Communication", "Problem Solving", "Adaptability", "Time Management", "Critical Thinking"].map((skill, index) => (
+                  <div key={index} style={styles.skillsListItem}>{skill}</div>
                 ))}
               </div>
             </div>
@@ -1489,42 +1169,22 @@ const ExperiencePage = () => {
         </div>
 
         <div style={styles.experienceStats}>
-          <h2 style={styles.sectionTitle} className="section-title">Experience Metrics</h2>
+          <h2 style={styles.sectionTitle}>Experience Metrics</h2>
           <div style={styles.statsGrid} className="stats-grid">
-            <div 
-              style={styles.statBox}
-              className="stat-box"
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
-              <div style={styles.statValue(animatedStats.years, true)}>2+</div>
-              <div style={styles.statDescription}>Years of Professional Experience</div>
+            <div style={styles.statBox}>
+              <div style={styles.statValue()}>2+</div>
+              <div style={styles.statDescription}>Years Experience</div>
             </div>
-            <div 
-              style={styles.statBox}
-              className="stat-box"
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
-              <div style={styles.statValue(animatedStats.leadership, true)}>4</div>
-              <div style={styles.statDescription}>Leadership Positions Held</div>
+            <div style={styles.statBox}>
+              <div style={styles.statValue()}>4</div>
+              <div style={styles.statDescription}>Leadership Roles</div>
             </div>
-            <div 
-              style={styles.statBox}
-              className="stat-box"
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
-              <div style={styles.statValue(animatedStats.organizations, true)}>6+</div>
-              <div style={styles.statDescription}>Organizations Involved</div>
+            <div style={styles.statBox}>
+              <div style={styles.statValue()}>6+</div>
+              <div style={styles.statDescription}>Organizations</div>
             </div>
-            <div 
-              style={styles.statBox}
-              className="stat-box"
-              onMouseEnter={(e) => handleCardHover(e, true)}
-              onMouseLeave={(e) => handleCardHover(e, false)}
-            >
-              <div style={styles.statValue(animatedStats.mentored, true)}>26+</div>
+            <div style={styles.statBox}>
+              <div style={styles.statValue()}>26+</div>
               <div style={styles.statDescription}>Students Mentored</div>
             </div>
           </div>
