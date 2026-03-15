@@ -39,6 +39,36 @@ const ExperiencePage = () => {
   const experiences = [
     {
       id: 1,
+      title: "Amazon Junior Software Developer",
+      company: "Coursera - Professional Certificate",
+      period: "Jan 2026 - Present",
+      location: "Remote",
+      type: "Professional Development",
+      logo: "🎓",
+      current: true,
+      isGrouped: false,
+      responsibilities: [
+        "Currently progressing through Programming with Java course focusing on OOP principles, data types, and control structures",
+        "Building foundational knowledge in Data Structures and Algorithms, Database Management with Java and SQL",
+        "Preparing for Full Stack Web Development, Generative AI in Software Development, and Application Development modules"
+      ],
+      skills: ["Java", "Software Development", "SDLC", "OOP", "Data Structures", "SQL", "Full Stack Development", "AI in Development"],
+      milestones: [
+        {
+          title: "Introduction to Software Development",
+          status: "Completed",
+          date: "Mar 14, 2026",
+          description: "Completed Course 1 of 7 - Covered software engineering fundamentals, SDLC, and development methodologies"
+        }
+      ],
+      courseProgress: {
+        completed: ["Introduction to Software Development"],
+        inProgress: ["Programming with Java"],
+        upcoming: ["Data Structures and Algorithms", "Database Management with Java and SQL", "Full Stack Web Development", "Generative AI in Software Development", "Application Development"]
+      }
+    },
+    {
+      id: 2,
       company: "Amazon",
       period: "Oct 2024 - Present",
       totalDuration: "1 yr 5 mos",
@@ -71,29 +101,6 @@ const ExperiencePage = () => {
           skills: ["Package Sorting", "Time Management", "Accuracy", "Adaptability", "Safety Standards"]
         }
       ]
-    },
-    {
-      id: 2,
-      title: "Amazon Junior Software Developer",
-      company: "Coursera - Professional Certificate",
-      period: "Jan 2026 - Present",
-      location: "Remote",
-      type: "Professional Development",
-      logo: "🎓",
-      current: true,
-      isGrouped: false,
-      responsibilities: [
-        "Completed Introduction to Software Development course covering software engineering fundamentals, SDLC, and development methodologies",
-        "Currently progressing through Programming with Java course focusing on OOP principles, data types, and control structures",
-        "Building foundational knowledge in Data Structures and Algorithms, Database Management with Java and SQL",
-        "Preparing for Full Stack Web Development, Generative AI in Software Development, and Application Development modules"
-      ],
-      skills: ["Java", "Software Development", "SDLC", "OOP", "Data Structures", "SQL", "Full Stack Development", "AI in Development"],
-      courseProgress: {
-        completed: ["Introduction to Software Development"],
-        inProgress: ["Programming with Java"],
-        upcoming: ["Data Structures and Algorithms", "Database Management with Java and SQL", "Full Stack Web Development", "Generative AI in Software Development", "Application Development"]
-      }
     },
     {
       id: 3,
@@ -426,26 +433,7 @@ const ExperiencePage = () => {
 
     timelineItem: {
       position: 'relative',
-      marginBottom: '2rem',
-      paddingLeft: '3rem'
-    },
-
-    timelineMarker: {
-      position: 'absolute',
-      left: '0',
-      top: '1rem',
-      width: '1.2rem',
-      height: '1.2rem',
-      background: colors.cardBg,
-      border: `3px solid ${colors.primary}`,
-      borderRadius: '50%',
-      zIndex: 3
-    },
-
-    timelineMarkerCurrent: {
-      background: colors.primary,
-      boxShadow: `0 0 20px rgba(37, 99, 235, 0.5)`,
-      animation: 'pulse 2s infinite'
+      marginBottom: '2rem'
     },
 
     timelineContent: {
@@ -670,6 +658,93 @@ const ExperiencePage = () => {
       flexWrap: 'wrap',
       gap: '0.5rem',
       justifyContent: 'flex-start'
+    },
+
+    milestonesSection: {
+      marginBottom: '1.5rem',
+      padding: '1rem',
+      background: `linear-gradient(135deg, ${colors.success}08, ${colors.primary}05)`,
+      borderRadius: '12px',
+      border: `1px solid ${colors.success}20`
+    },
+
+    milestonesTitle: {
+      fontSize: '0.9rem',
+      fontWeight: '600',
+      color: colors.text,
+      marginBottom: '0.75rem',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem'
+    },
+
+    milestoneItem: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '0.75rem',
+      padding: '0.75rem',
+      background: colors.cardBg,
+      borderRadius: '8px',
+      marginBottom: '0.5rem',
+      border: `1px solid ${colors.border}`
+    },
+
+    milestoneIcon: {
+      width: '24px',
+      height: '24px',
+      borderRadius: '50%',
+      background: colors.success,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#fff',
+      fontSize: '0.75rem',
+      flexShrink: 0
+    },
+
+    milestoneContent: {
+      flex: 1,
+      textAlign: 'left'
+    },
+
+    milestoneHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '0.25rem',
+      flexWrap: 'wrap',
+      gap: '0.5rem'
+    },
+
+    milestoneName: {
+      fontSize: '0.9rem',
+      fontWeight: '600',
+      color: colors.text
+    },
+
+    milestoneDate: {
+      fontSize: '0.75rem',
+      color: colors.textMuted,
+      fontWeight: '500'
+    },
+
+    milestoneDescription: {
+      fontSize: '0.85rem',
+      color: colors.textLight,
+      lineHeight: '1.5'
+    },
+
+    milestoneBadge: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.25rem',
+      padding: '0.2rem 0.5rem',
+      background: `${colors.success}15`,
+      color: colors.success,
+      borderRadius: '12px',
+      fontSize: '0.7rem',
+      fontWeight: '600',
+      textTransform: 'uppercase'
     },
 
     skillTag: {
@@ -1025,14 +1100,8 @@ const ExperiencePage = () => {
             }
             
             .timeline-item {
-              padding-left: 2.5rem !important;
+              padding-left: 0 !important;
               margin-bottom: 1.5rem !important;
-            }
-            
-            .timeline-marker {
-              left: 0 !important;
-              width: 1rem !important;
-              height: 1rem !important;
             }
             
             .timeline-content {
@@ -1110,7 +1179,7 @@ const ExperiencePage = () => {
           
           @media (max-width: 480px) {
             .timeline-item {
-              padding-left: 2rem !important;
+              padding-left: 0 !important;
             }
             
             .timeline-content {
@@ -1157,13 +1226,6 @@ const ExperiencePage = () => {
           <div style={styles.timeline}>
             {experiences.map((exp) => (
               <div key={exp.id} style={styles.timelineItem} className="timeline-item">
-                <div 
-                  style={{
-                    ...styles.timelineMarker,
-                    ...(exp.current ? styles.timelineMarkerCurrent : {})
-                  }}
-                  className="timeline-marker"
-                ></div>
                 <div 
                   style={styles.timelineContent}
                   className="timeline-content"
@@ -1255,6 +1317,29 @@ const ExperiencePage = () => {
                           </div>
                         </div>
                       </div>
+                      
+                      {/* Milestones/Accomplishments Section */}
+                      {exp.milestones && exp.milestones.length > 0 && (
+                        <div style={styles.milestonesSection}>
+                          <div style={styles.milestonesTitle}>
+                            <span>🏆</span> Accomplishments
+                          </div>
+                          {exp.milestones.map((milestone, mIndex) => (
+                            <div key={mIndex} style={styles.milestoneItem}>
+                              <div style={styles.milestoneIcon}>✓</div>
+                              <div style={styles.milestoneContent}>
+                                <div style={styles.milestoneHeader}>
+                                  <span style={styles.milestoneName}>{milestone.title}</span>
+                                  <span style={styles.milestoneBadge}>{milestone.status}</span>
+                                </div>
+                                <div style={styles.milestoneDate}>{milestone.date}</div>
+                                <div style={styles.milestoneDescription}>{milestone.description}</div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                      
                       <div style={styles.experienceDescription}>
                         <ul style={styles.responsibilitiesList}>
                           {exp.responsibilities.map((responsibility, index) => (
