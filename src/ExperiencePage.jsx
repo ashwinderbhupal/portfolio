@@ -626,39 +626,50 @@ const ExperiencePage = () => {
     },
 
     roleDescription: {
-      marginBottom: '1rem'
+      marginBottom: '1rem',
+      textAlign: 'left'
     },
 
     experienceDescription: {
-      marginBottom: '2rem'
+      marginBottom: '2rem',
+      textAlign: 'left'
     },
 
     responsibilitiesList: {
       listStyle: 'none',
       padding: 0,
-      margin: 0
+      margin: 0,
+      textAlign: 'left'
     },
 
     responsibilityItem: {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '1rem',
-      marginBottom: '1rem',
+      gap: '0.75rem',
+      marginBottom: '0.875rem',
       color: colors.textLight,
       lineHeight: '1.6',
-      '&::before': {
-        content: '"▸"',
-        color: colors.primary,
-        fontWeight: '600',
-        flexShrink: 0,
-        marginTop: '0.1rem'
-      }
+      textAlign: 'left'
+    },
+
+    responsibilityBullet: {
+      color: colors.primary,
+      fontWeight: '600',
+      flexShrink: 0,
+      marginTop: '0.1rem',
+      fontSize: '0.9rem'
+    },
+
+    responsibilityText: {
+      flex: 1,
+      textAlign: 'left'
     },
 
     experienceSkills: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: '0.5rem'
+      gap: '0.5rem',
+      justifyContent: 'flex-start'
     },
 
     skillTag: {
@@ -1204,7 +1215,8 @@ const ExperiencePage = () => {
                               <ul style={styles.responsibilitiesList}>
                                 {role.responsibilities.map((responsibility, respIndex) => (
                                   <li key={respIndex} style={styles.responsibilityItem} className="responsibility-item">
-                                    {responsibility}
+                                    <span style={styles.responsibilityBullet}>▸</span>
+                                    <span style={styles.responsibilityText}>{responsibility}</span>
                                   </li>
                                 ))}
                               </ul>
@@ -1247,7 +1259,8 @@ const ExperiencePage = () => {
                         <ul style={styles.responsibilitiesList}>
                           {exp.responsibilities.map((responsibility, index) => (
                             <li key={index} style={styles.responsibilityItem} className="responsibility-item">
-                              {responsibility}
+                              <span style={styles.responsibilityBullet}>▸</span>
+                              <span style={styles.responsibilityText}>{responsibility}</span>
                             </li>
                           ))}
                         </ul>
