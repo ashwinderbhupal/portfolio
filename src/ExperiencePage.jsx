@@ -4,6 +4,7 @@ const ExperiencePage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [animatedStats, setAnimatedStats] = useState({});
+  const [expandedExperiences, setExpandedExperiences] = useState([1]); // start with current role open
   const particleCanvasRef = useRef(null);
 
   // Clean, minimal color palette
@@ -292,6 +293,14 @@ const ExperiencePage = () => {
     };
   };
 
+  const isExperienceExpanded = (id) => expandedExperiences.includes(id);
+
+  const toggleExperience = (id) => {
+    setExpandedExperiences((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
   // Clean, minimal styles
   const styles = {
     experiencePage: {
@@ -372,7 +381,8 @@ const ExperiencePage = () => {
       padding: '16px',
       border: `1px solid ${colors.border}`,
       width: '100%',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      cursor: 'pointer'
     },
 
     experienceHeader: {
@@ -844,6 +854,21 @@ const ExperiencePage = () => {
     statDescription: {
       color: colors.textLight,
       fontSize: '0.85rem'
+    },
+
+    expandToggleRow: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      marginTop: '8px'
+    },
+
+    expandToggle: {
+      fontSize: '0.8rem',
+      color: colors.accent,
+      border: 'none',
+      background: 'transparent',
+      padding: 0,
+      cursor: 'pointer'
     }
   };
 
@@ -973,13 +998,16 @@ const ExperiencePage = () => {
         <div style={styles.experienceTimeline} className="experience-timeline-wrapper">
           <h2 style={styles.sectionTitle} className="section-title">Professional Experience</h2>
           <div style={styles.timeline}>
-            {experiences.map((exp) => (
+            {experiences.map((exp) => {
+              const expanded = isExperienceExpanded(exp.id);
+              return (
               <div key={exp.id} style={styles.timelineItem} className="exp-timeline-item">
                 <div 
                   style={styles.timelineContent}
                   className="exp-timeline-content"
                   onMouseEnter={(e) => handleTimelineHover(e, true)}
                   onMouseLeave={(e) => handleTimelineHover(e, false)}
+                  onClick={() => toggleExperience(exp.id)}
                 >
                   {exp.isGrouped ? (
                     // Grouped experience (multiple roles at same company)
@@ -1007,6 +1035,16 @@ const ExperiencePage = () => {
                           </div>
                         </div>
                       </div>
+                      <div style={styles.expandToggleRow}>
+                        <button
+                          type="button"
+                          style={styles.expandToggle}
+                          onClick={(e) => { e.stopPropagation(); toggleExperience(exp.id); }}
+                        >
+                          {expanded ? 'Hide details ▲' : 'Show details ▼'}
+                        </button>
+                      </div>
+                      {expanded && (
                       <div style={styles.rolesContainer}>
                         {exp.roles.map((role, roleIndex) => (
                           <div 
@@ -1040,6 +1078,7 @@ const ExperiencePage = () => {
                           </div>
                         ))}
                       </div>
+                      )}
                     </>
                   ) : (
                     // Single role experience
@@ -1067,48 +1106,62 @@ const ExperiencePage = () => {
                         </div>
                       </div>
                       
-                      {/* Milestones/Accomplishments Section */}
-                      {exp.milestones && exp.milestones.length > 0 && (
-                        <div style={styles.milestonesSection}>
-                          <div style={styles.milestonesTitle}>
-                            <span>🏆</span> Accomplishments
-                          </div>
-                          {exp.milestones.map((milestone, mIndex) => (
-                            <div key={mIndex} style={styles.milestoneItem}>
-                              <div style={styles.milestoneIcon}>✓</div>
-                              <div style={styles.milestoneContent}>
-                                <div style={styles.milestoneHeader}>
-                                  <span style={styles.milestoneName}>{milestone.title}</span>
-                                  <span style={styles.milestoneBadge}>{milestone.status}</span>
-                                </div>
-                                <div style={styles.milestoneDate}>{milestone.date}</div>
-                                <div style={styles.milestoneDescription}>{milestone.description}</div>
+                      <div style={styles.expandToggleRow}>
+                        <button
+                          type="button"
+                          style={styles.expandToggle}
+                          onClick={(e) => { e.stopPropagation(); toggleExperience(exp.id); }}
+                        >
+                          {expanded ? 'Hide details ▲' : 'Show details ▼'}
+                        </button>
+                      </div>
+
+                      {expanded && (
+                        <>
+                          {/* Milestones/Accomplishments Section */}
+                          {exp.milestones && exp.milestones.length > 0 && (
+                            <div style={styles.milestonesSection}>
+                              <div style={styles.milestonesTitle}>
+                                <span>🏆</span> Accomplishments
                               </div>
+                              {exp.milestones.map((milestone, mIndex) => (
+                                <div key={mIndex} style={styles.milestoneItem}>
+                                  <div style={styles.milestoneIcon}>✓</div>
+                                  <div style={styles.milestoneContent}>
+                                    <div style={styles.milestoneHeader}>
+                                      <span style={styles.milestoneName}>{milestone.title}</span>
+                                      <span style={styles.milestoneBadge}>{milestone.status}</span>
+                                    </div>
+                                    <div style={styles.milestoneDate}>{milestone.date}</div>
+                                    <div style={styles.milestoneDescription}>{milestone.description}</div>
+                                  </div>
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
+                          )}
+                          
+                          <div style={styles.experienceDescription}>
+                            <ul style={styles.responsibilitiesList}>
+                              {exp.responsibilities.map((responsibility, index) => (
+                                <li key={index} style={styles.responsibilityItem} className="responsibility-item">
+                                  <span style={styles.responsibilityBullet}>▸</span>
+                                  <span style={styles.responsibilityText}>{responsibility}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div style={styles.experienceSkills} className="skills-container">
+                            {exp.skills.map((skill, index) => (
+                              <span key={index} style={styles.skillTag} className="skill-tag">{skill}</span>
+                            ))}
+                          </div>
+                        </>
                       )}
-                      
-                      <div style={styles.experienceDescription}>
-                        <ul style={styles.responsibilitiesList}>
-                          {exp.responsibilities.map((responsibility, index) => (
-                            <li key={index} style={styles.responsibilityItem} className="responsibility-item">
-                              <span style={styles.responsibilityBullet}>▸</span>
-                              <span style={styles.responsibilityText}>{responsibility}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div style={styles.experienceSkills} className="skills-container">
-                        {exp.skills.map((skill, index) => (
-                          <span key={index} style={styles.skillTag} className="skill-tag">{skill}</span>
-                        ))}
-                      </div>
                     </>
                   )}
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
 
