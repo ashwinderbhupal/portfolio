@@ -20,33 +20,28 @@ const HomePage = () => {
     "AI Researcher"
   ];
 
-  // Enhanced color palette with more variations
+  // Clean minimal theme (matches Experience page)
   const colors = {
-    primary: '#2563eb',
-    primaryDark: '#1e40af',
-    primaryLight: '#3b82f6',
-    secondary: '#64748b',
-    accent: '#06b6d4',
-    accentDark: '#0891b2',
-    background: '#f8fafc',
-    backgroundAlt: '#f1f5f9',
+    primary: '#0f172a',
+    primaryDark: '#020617',
+    primaryLight: '#334155',
+    accent: '#3b82f6',
+    accentLight: '#60a5fa',
+    secondary: '#475569',
+    background: '#ffffff',
+    backgroundAlt: '#f8fafc',
     cardBg: '#ffffff',
-    cardBgAlt: 'rgba(255, 255, 255, 0.9)',
-    text: '#1e293b',
-    textLight: '#64748b',
+    text: '#0f172a',
+    textLight: '#475569',
     textMuted: '#94a3b8',
     border: '#e2e8f0',
-    borderLight: '#f1f5f9',
-    shadow: 'rgba(15, 23, 42, 0.08)',
-    shadowMedium: 'rgba(15, 23, 42, 0.12)',
-    shadowHeavy: 'rgba(15, 23, 42, 0.25)',
-    gradient1: '#6366f1',
-    gradient2: '#8b5cf6',
-    gradient3: '#ec4899',
-    gradient4: '#06b6d4',
-    success: '#10b981',
+    success: '#22c55e',
     warning: '#f59e0b',
     error: '#ef4444',
+    gradient1: '#3b82f6',
+    gradient2: '#8b5cf6',
+    gradient3: '#6366f1',
+    gradient4: '#60a5fa',
     glassBg: 'rgba(255, 255, 255, 0.1)',
     glassBorder: 'rgba(255, 255, 255, 0.2)'
   };
@@ -272,18 +267,17 @@ const HomePage = () => {
     }),
     
     heroContent: {
-      maxWidth: '1400px',
+      maxWidth: '960px',
       textAlign: 'center',
       zIndex: 5,
       position: 'relative',
       opacity: isVisible ? 1 : 0,
       transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(50px) scale(0.95)',
       transition: 'all 1.2s cubic-bezier(0.23, 1, 0.32, 1)',
-      padding: '0 1rem',
+      padding: '0 12px',
       width: '100%',
-      '@media (min-width: 768px)': {
-        padding: '0 2rem'
-      }
+      margin: '0 auto',
+      boxSizing: 'border-box'
     },
     
     heroTitle: {
@@ -692,46 +686,22 @@ const HomePage = () => {
     },
     
     container: {
-      maxWidth: '1400px',
+      width: '100%',
+      maxWidth: '960px',
       margin: '0 auto',
-      padding: '0 1rem',
-      '@media (min-width: 768px)': {
-        padding: '0 2rem'
-      }
+      padding: '0 12px',
+      boxSizing: 'border-box'
     },
     
     sectionTitle: {
-      fontSize: 'clamp(2rem, 6vw, 4rem)',
-      fontWeight: '800',
-      background: `linear-gradient(135deg, ${colors.text} 0%, ${colors.primary} 50%, ${colors.accent} 100%)`,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      textAlign: 'center',
-      marginBottom: '3rem',
-      position: 'relative',
+      fontSize: '1.3rem',
+      fontWeight: '600',
+      color: colors.text,
+      marginBottom: '24px',
+      paddingBottom: '12px',
+      borderBottom: `2px solid ${colors.border}`,
       letterSpacing: '-0.02em',
-      lineHeight: '1.2',
-      '@media (min-width: 768px)': {
-        marginBottom: '4rem',
-        lineHeight: '1.1'
-      },
-      '@media (min-width: 1024px)': {
-        marginBottom: '5rem'
-      },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        bottom: '-8px',
-        left: '50%',
-        width: 'clamp(60px, 15vw, 80px)',
-        height: 'clamp(3px, 0.5vw, 4px)',
-        background: `linear-gradient(90deg, ${colors.primary}, ${colors.accent})`,
-        transform: 'translateX(-50%)',
-        borderRadius: '2px',
-        '@media (min-width: 768px)': {
-          bottom: '-15px'
-        }
-      }
+      textAlign: 'left'
     },
     
     highlightsGrid: {
@@ -751,19 +721,13 @@ const HomePage = () => {
     },
     
     highlightCard: {
-      background: `${colors.cardBg}`,
-      borderRadius: '20px',
-      padding: '2rem',
-      boxShadow: `
-        0 15px 40px rgba(15, 23, 42, 0.08),
-        0 6px 20px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      background: colors.cardBg,
+      borderRadius: '12px',
+      padding: '1.5rem',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: 'all 0.3s ease',
       position: 'relative',
       overflow: 'hidden',
-      backdropFilter: 'blur(20px)',
       touchAction: 'manipulation',
       cursor: 'pointer',
       '@media (min-width: 768px)': {

@@ -897,7 +897,7 @@ const ExperiencePage = () => {
   };
 
   return (
-    <div style={styles.experiencePage}>
+    <div style={styles.experiencePage} className="experience-page-root">
       <canvas 
         ref={particleCanvasRef}
         style={styles.particleCanvas}
@@ -925,6 +925,13 @@ const ExperiencePage = () => {
           .leadership-card {
             width: 100% !important;
             box-sizing: border-box !important;
+          }
+          
+          /* Mobile: reduce top padding so heading isn’t pushed down */
+          @media (max-width: 768px) {
+            .experience-page-root {
+              padding-top: 16px !important;
+            }
           }
           
           /* Mobile styles */

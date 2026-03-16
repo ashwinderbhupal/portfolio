@@ -11,34 +11,26 @@ const AboutPage = () => {
   const base = import.meta.env.BASE_URL;
   const resumeUrl = `${base}Resume/Ashwinder_Bhupal.pdf`;
 
-  // Professional color palette matching HomePage
+  // Clean minimal theme (matches Experience page)
   const colors = {
-    primary: '#2563eb',
-    primaryDark: '#1e40af',
-    primaryLight: '#3b82f6',
-    secondary: '#64748b',
-    accent: '#06b6d4',
-    accentDark: '#0891b2',
-    background: '#f8fafc',
-    backgroundAlt: '#f1f5f9',
+    primary: '#0f172a',
+    primaryLight: '#334155',
+    accent: '#3b82f6',
+    accentLight: '#60a5fa',
+    background: '#ffffff',
+    backgroundAlt: '#f8fafc',
     cardBg: '#ffffff',
-    cardBgAlt: 'rgba(255, 255, 255, 0.9)',
-    text: '#1e293b',
-    textLight: '#64748b',
+    text: '#0f172a',
+    textLight: '#475569',
     textMuted: '#94a3b8',
     border: '#e2e8f0',
-    borderLight: '#f1f5f9',
-    shadow: 'rgba(15, 23, 42, 0.08)',
-    shadowMedium: 'rgba(15, 23, 42, 0.12)',
-    shadowHeavy: 'rgba(15, 23, 42, 0.25)',
-    gradient1: '#6366f1',
-    gradient2: '#8b5cf6',
-    gradient3: '#ec4899',
-    gradient4: '#06b6d4',
-    success: '#10b981',
+    success: '#22c55e',
     warning: '#f59e0b',
-    glassBg: 'rgba(255, 255, 255, 0.9)',
-    glassBorder: 'rgba(255, 255, 255, 0.2)'
+    purple: '#8b5cf6',
+    gradient1: '#3b82f6',
+    gradient2: '#8b5cf6',
+    gradient3: '#6366f1',
+    gradient4: '#60a5fa'
   };
 
   // Effects and animations
@@ -141,15 +133,15 @@ const AboutPage = () => {
   // Comprehensive styles
   const styles = {
     aboutPage: {
-      background: `
-        linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #ffffff 75%, #f8fafc 100%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
-      `,
+      background: colors.background,
       minHeight: '100vh',
+      width: '100%',
       position: 'relative',
       overflow: 'hidden',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      paddingTop: '85px'
+      paddingTop: '16px',
+      paddingBottom: '60px',
+      boxSizing: 'border-box'
     },
 
     particleCanvas: {
@@ -163,14 +155,13 @@ const AboutPage = () => {
     },
 
     container: {
-      maxWidth: '1400px',
+      width: '100%',
+      maxWidth: '960px',
       margin: '0 auto',
-      padding: '0 1rem',
+      padding: '0 12px',
       position: 'relative',
       zIndex: 2,
-      '@media (min-width: 768px)': {
-        padding: '0 2rem'
-      }
+      boxSizing: 'border-box'
     },
 
     aboutHero: {
@@ -179,7 +170,7 @@ const AboutPage = () => {
       gap: '3rem',
       alignItems: 'center',
       minHeight: '80vh',
-      padding: '3rem 0',
+      padding: '0 0 3rem 0',
       opacity: isVisible ? 1 : 0,
       transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
       transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -197,39 +188,21 @@ const AboutPage = () => {
     },
 
     pageTitle: {
-      fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
-      fontWeight: '900',
-      background: `
-        linear-gradient(
-          135deg, 
-          ${colors.text} 0%, 
-          ${colors.primary} 25%, 
-          ${colors.gradient2} 50%, 
-          ${colors.accent} 75%, 
-          ${colors.gradient1} 100%
-        )
-      `,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
+      fontSize: 'clamp(2.8rem, 7vw, 3.8rem)',
+      fontWeight: '700',
+      color: colors.text,
       letterSpacing: '-0.02em',
-      lineHeight: '1.1',
-      marginBottom: '2rem',
-      backgroundSize: '400% 400%',
-      animation: 'gradientShift 8s ease-in-out infinite'
+      marginBottom: '12px',
+      lineHeight: '1.1'
     },
 
     aboutLead: {
-      fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-      lineHeight: '1.7',
-      color: colors.textLight,
-      marginBottom: '3rem',
-      maxWidth: '850px',
-      margin: '0 auto 3rem auto',
-      fontWeight: '400',
-      '@media (min-width: 1024px)': {
-        margin: '0 0 3rem 0'
-      }
+      fontSize: '0.95rem',
+      lineHeight: '1.6',
+      color: colors.textMuted,
+      maxWidth: '540px',
+      margin: '0 auto 2rem auto',
+      fontWeight: '400'
     },
 
     aboutImage: {
@@ -315,13 +288,12 @@ const AboutPage = () => {
     },
 
     sectionTitle: {
-      fontSize: 'clamp(2rem, 5vw, 3rem)',
-      fontWeight: '700',
-      background: `linear-gradient(135deg, ${colors.text} 0%, ${colors.primary} 50%, ${colors.accent} 100%)`,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      textAlign: 'center',
-      marginBottom: '4rem',
+      fontSize: '1.3rem',
+      fontWeight: '600',
+      color: colors.text,
+      marginBottom: '24px',
+      paddingBottom: '12px',
+      borderBottom: `2px solid ${colors.border}`,
       letterSpacing: '-0.02em'
     },
 
@@ -341,18 +313,12 @@ const AboutPage = () => {
 
     featureCard: {
       background: colors.cardBg,
-      borderRadius: '24px',
-      padding: '2.5rem',
-      boxShadow: `
-        0 15px 40px rgba(15, 23, 42, 0.08),
-        0 6px 20px rgba(15, 23, 42, 0.04),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9)
-      `,
+      borderRadius: '12px',
+      padding: '1.5rem',
       border: `1px solid ${colors.border}`,
-      transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: 'all 0.3s ease',
       position: 'relative',
-      overflow: 'hidden',
-      backdropFilter: 'blur(20px)'
+      overflow: 'hidden'
     },
 
     featureIcon: {

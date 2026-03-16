@@ -7,34 +7,27 @@ const ProjectsPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const particleCanvasRef = useRef(null);
 
-  // Professional color palette matching other pages
+  // Clean minimal theme (matches Experience page)
   const colors = {
-    primary: '#2563eb',
-    primaryDark: '#1e40af',
-    primaryLight: '#3b82f6',
-    secondary: '#64748b',
-    accent: '#06b6d4',
-    accentDark: '#0891b2',
-    background: '#f8fafc',
-    backgroundAlt: '#f1f5f9',
+    primary: '#0f172a',
+    primaryLight: '#334155',
+    accent: '#3b82f6',
+    accentLight: '#60a5fa',
+    background: '#ffffff',
+    backgroundAlt: '#f8fafc',
     cardBg: '#ffffff',
-    cardBgAlt: 'rgba(255, 255, 255, 0.9)',
-    text: '#1e293b',
-    textLight: '#64748b',
+    text: '#0f172a',
+    textLight: '#475569',
     textMuted: '#94a3b8',
     border: '#e2e8f0',
-    borderLight: '#f1f5f9',
-    shadow: 'rgba(15, 23, 42, 0.08)',
-    shadowMedium: 'rgba(15, 23, 42, 0.12)',
-    shadowHeavy: 'rgba(15, 23, 42, 0.25)',
-    gradient1: '#6366f1',
-    gradient2: '#8b5cf6',
-    gradient3: '#ec4899',
-    gradient4: '#06b6d4',
-    success: '#10b981',
+    success: '#22c55e',
     warning: '#f59e0b',
-    glassBg: 'rgba(255, 255, 255, 0.9)',
-    glassBorder: 'rgba(255, 255, 255, 0.2)'
+    purple: '#8b5cf6',
+    gradient1: '#3b82f6',
+    gradient2: '#8b5cf6',
+    gradient3: '#6366f1',
+    gradient4: '#60a5fa',
+    cardBgAlt: 'rgba(255, 255, 255, 0.98)'
   };
 
   const projects = [
@@ -252,15 +245,15 @@ const ProjectsPage = () => {
   // Comprehensive styles
   const styles = {
     projectsPage: {
-      background: `
-        linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #ffffff 75%, #f8fafc 100%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e2e8f0' fill-opacity='0.3'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
-      `,
+      background: colors.background,
       minHeight: '100vh',
+      width: '100%',
       position: 'relative',
       overflow: 'hidden',
       fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-      paddingTop: '85px'
+      paddingTop: '16px',
+      paddingBottom: '60px',
+      boxSizing: 'border-box'
     },
 
     particleCanvas: {
@@ -274,14 +267,13 @@ const ProjectsPage = () => {
     },
 
     container: {
-      maxWidth: '1400px',
+      width: '100%',
+      maxWidth: '960px',
       margin: '0 auto',
-      padding: '0 1rem',
+      padding: '0 12px',
       position: 'relative',
       zIndex: 2,
-      '@media (min-width: 768px)': {
-        padding: '0 2rem'
-      }
+      boxSizing: 'border-box'
     },
 
     floatingShapes: {
@@ -316,42 +308,28 @@ const ProjectsPage = () => {
 
     projectsHero: {
       textAlign: 'center',
-      padding: '4rem 0 6rem 0',
+      padding: '0 0 3rem 0',
       opacity: isVisible ? 1 : 0,
       transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
       transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)'
     },
 
     pageTitle: {
-      fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-      fontWeight: '900',
-      background: `
-        linear-gradient(
-          135deg, 
-          ${colors.text} 0%, 
-          ${colors.primary} 25%, 
-          ${colors.gradient2} 50%, 
-          ${colors.accent} 75%, 
-          ${colors.gradient1} 100%
-        )
-      `,
-      WebkitBackgroundClip: 'text',
-      WebkitTextFillColor: 'transparent',
-      backgroundClip: 'text',
+      fontSize: 'clamp(2.8rem, 7vw, 3.8rem)',
+      fontWeight: '700',
+      color: colors.text,
       letterSpacing: '-0.02em',
-      lineHeight: '1.1',
-      marginBottom: '1.5rem',
-      backgroundSize: '400% 400%',
-      animation: 'gradientShift 8s ease-in-out infinite'
+      marginBottom: '12px',
+      lineHeight: '1.1'
     },
 
     pageSubtitle: {
-      fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
-      lineHeight: '1.7',
-      color: colors.textLight,
-      maxWidth: '700px',
+      fontSize: '0.95rem',
+      color: colors.textMuted,
+      fontWeight: '400',
+      maxWidth: '540px',
       margin: '0 auto',
-      fontWeight: '400'
+      lineHeight: '1.5'
     },
 
     projectsFilter: {
@@ -448,8 +426,9 @@ const ProjectsPage = () => {
 
     projectCard: {
       background: colors.cardBg,
-      borderRadius: '24px',
+      borderRadius: '12px',
       overflow: 'hidden',
+      border: `1px solid ${colors.border}`,
       boxShadow: `
         0 15px 40px rgba(15, 23, 42, 0.08),
         0 6px 20px rgba(15, 23, 42, 0.04),
