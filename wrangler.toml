@@ -1,0 +1,4 @@
+# Cloudflare Pages — see npm run deploy:cloudflare
+name = "ashwinder-portfolio"
+compatibility_date = "2025-05-25"
+pages_build_output_dir = "dist"
