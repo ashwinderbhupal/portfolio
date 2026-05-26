@@ -1,8 +1,8 @@
 name: Deploy to Cloudflare Pages
 
+# Manual only — requires CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID repo secrets.
+# Production deploys use Vercel; this workflow is optional.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
