@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { navLinks } from '../data/personal.js'
 import { assetUrl, resumeUrl } from '../lib/assets.js'
 
 const Nav = () => {
+  const location = useLocation()
   const [scrolled, setScrolled] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -35,6 +36,10 @@ const Nav = () => {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [location.pathname])
+
   const closeMenu = () => setMenuOpen(false)
 
   return (
@@ -63,7 +68,7 @@ const Nav = () => {
             )}
           </Link>
 
-          <nav className="nav-links" aria-label="Main navigation">
+          <nav className="nav-links nav-desktop-only" aria-label="Main navigation">
             {navLinks.map((item) => (
               <NavLink
                 key={item.path}
@@ -76,7 +81,7 @@ const Nav = () => {
             ))}
           </nav>
 
-          <div className="nav-actions">
+          <div className="nav-actions nav-desktop-only">
             <div className="nav-open-badge" aria-label="Open to work">
               <span className="nav-open-dot" aria-hidden="true" />
               Open to Work
@@ -89,18 +94,20 @@ const Nav = () => {
             >
               Resume
             </a>
-            <button
-              type="button"
-              className={`menu-toggle${menuOpen ? ' open' : ''}`}
-              aria-label="Toggle menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((v) => !v)}
-            >
-              <span />
-              <span />
-              <span />
-            </button>
           </div>
+
+          <button
+            type="button"
+            className={`menu-toggle nav-mobile-only${menuOpen ? ' open' : ''}`}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav-panel"
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
 
         <div
@@ -109,7 +116,8 @@ const Nav = () => {
           aria-hidden="true"
         />
         <nav
-          className={`nav-mobile-panel${menuOpen ? ' open' : ''}`}
+          id="mobile-nav-panel"
+          className={`nav-mobile-panel nav-mobile-only${menuOpen ? ' open' : ''}`}
           aria-label="Mobile navigation"
         >
           {navLinks.map((item) => (
