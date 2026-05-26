@@ -1,0 +1,107 @@
+import ScrollReveal from '../components/ScrollReveal.jsx'
+import SkillBar from '../components/SkillBar.jsx'
+import LearningRing from '../components/LearningRing.jsx'
+import {
+  skillCategories,
+  certifications,
+  currentlyLearning,
+  skillsPageCopy
+} from '../data/skills.js'
+
+const Skills = () => {
+  return (
+    <>
+      <section className="section page-hero">
+        <div className="container">
+          <ScrollReveal>
+            <span className="section-label">Capabilities</span>
+            <h1 className="section-title">{skillsPageCopy.title}</h1>
+            <p className="section-subtitle">{skillsPageCopy.subtitle}</p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <div className="skills-category-grid">
+            {skillCategories.map((category, i) => (
+              <ScrollReveal key={category.name} delay={i * 80}>
+                <article className="skill-category-card">
+                  <div className="skill-category-header">
+                    <span aria-hidden="true">{category.icon}</span>
+                    {category.name}
+                  </div>
+                  {category.skills.map((skill) => (
+                    <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+                  ))}
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <ScrollReveal>
+            <div className="section-header">
+              <span className="section-label">Learning</span>
+              <h2 className="section-title">{skillsPageCopy.learningLabel}</h2>
+            </div>
+          </ScrollReveal>
+          <div className="learning-grid">
+            {currentlyLearning.map((item, i) => (
+              <ScrollReveal key={item.name} delay={i * 80}>
+                <LearningRing name={item.name} progress={item.progress} />
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <ScrollReveal>
+            <div className="section-header">
+              <span className="section-label">Credentials</span>
+              <h2 className="section-title">{skillsPageCopy.certificationsLabel}</h2>
+            </div>
+          </ScrollReveal>
+          <div className="certs-grid">
+            {certifications.map((cert, i) => {
+              const card = (
+                <>
+                  <div className="cert-header">
+                    <span className="cert-issuer-badge">{cert.issuer}</span>
+                    {cert.year ? <span className="cert-year-badge">{cert.year}</span> : null}
+                  </div>
+                  <h3 className="cert-name">{cert.name}</h3>
+                  {cert.url ? <span className="cert-link-label">View credential</span> : null}
+                </>
+              )
+
+              return (
+                <ScrollReveal key={`${cert.name}-${cert.issuer}`} delay={(i % 3) * 60}>
+                  {cert.url ? (
+                    <a
+                      className="cert-card cert-card-link"
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {card}
+                    </a>
+                  ) : (
+                    <article className="cert-card">{card}</article>
+                  )}
+                </ScrollReveal>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+export default Skills

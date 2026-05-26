@@ -33,8 +33,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Add .nojekyll
-        run: touch ./dist/.nojekyll
+      - name: Add .nojekyll and SPA fallback
+        run: |
+          touch ./dist/.nojekyll
+          cp ./dist/index.html ./dist/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
