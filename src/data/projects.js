@@ -15,6 +15,30 @@ export const projects = [
     image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80"
   },
   {
+    id: 12,
+    title: "Social Media Impact on Teen Mental Health",
+    description:
+      "End-to-end data science project on 1,200+ records and 13 features — full pipeline from EDA and hypothesis testing to ML (Logistic Regression, Random Forest, XGBoost, SVM) and model explainability (SHAP / variable importance). Explores how screen time, sleep, stress, anxiety, and platform use relate to depression risk, with takeaways for teens, parents, and schools. Built in R (R Markdown) and Python (Jupyter).",
+    tags: [
+      "R",
+      "Python",
+      "Jupyter",
+      "R Markdown",
+      "XGBoost",
+      "Random Forest",
+      "SVM",
+      "SHAP",
+      "EDA",
+      "Healthcare Analytics"
+    ],
+    category: "AI/ML Research",
+    featured: true,
+    year: "2025",
+    github: `${GITHUB}/Social-Media-Impact-on-Teen-Mental-Health`,
+    demo: null,
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
+  },
+  {
     id: 1,
     title: "FindJob4Me",
     description:
