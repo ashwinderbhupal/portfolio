@@ -1579,6 +1579,20 @@ ul {
   border-left-color: #6366f1;
 }
 
+.cert-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cert-link-label {
+  display: inline-block;
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--color-accent);
+}
+
 .cert-header {
   display: flex;
   align-items: center;
@@ -1786,6 +1800,12 @@ ul {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6);
+}
+
+.leadership-icon {
+  font-size: var(--text-3xl);
+  display: block;
+  margin-bottom: var(--space-4);
 }
 
 .leadership-role {

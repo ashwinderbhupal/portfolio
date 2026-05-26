@@ -47,54 +47,41 @@ export const experiences = [
       "Translated abstract CS theory into practical exercises, closing concept-to-application gaps for students struggling with foundational topics"
     ],
     tags: ["Java", "Data Structures", "JUnit", "Web Fundamentals", "Teaching"]
-  },
-  {
-    id: 4,
-    role: "CS Student — Dean's List",
-    company: "Rutgers University",
-    type: "Academic",
-    period: "2024 – Present",
-    duration: "Ongoing",
-    description:
-      "Pursuing Computer Science (3.94 GPA) with a Data Science Minor. Building academic and personal projects across databases, ML, and full-stack development.",
-    achievements: [
-      "Maintained 3.94 GPA across core CS coursework — Dean's List honoree",
-      "Built Railway Booking System for CS336 Database course using SQL, PHP, and MySQL",
-      "Co-authored LSTM-Based Animal Behavior Classification research using DeepLabCut and bidirectional LSTM — published on ResearchGate",
-      "Competed in HackTCNJ and NJIT Hackathon; active member of Rutgers Hackathon Club"
-    ],
-    tags: ["Algorithms", "Databases", "Machine Learning", "Full Stack", "Research"]
   }
 ]
 
 export const leadership = [
   {
-    role: "Tech Lead",
-    org: "Rutgers Hackathon Club",
-    period: "2024 – Present",
+    icon: "👨‍💼",
+    role: "President",
+    org: "Computer Science Club, Middlesex College",
+    period: "Jan 2024 – May 2024",
     description:
-      "Leading technical workshops and mentoring 26+ students in web development and competitive programming."
+      "Led club activities, organized coding competitions, and mentored fellow students in programming concepts and career development."
   },
   {
-    role: "Princeton Transfer Scholar",
-    org: "Princeton University TSI",
-    period: "Summer 2024",
+    icon: "🎯",
+    role: "Vice President",
+    org: "Computer Science Club, Middlesex College",
+    period: "Sept 2023 – Dec 2023",
     description:
-      "Selective program for high-achieving transfer students. Conducted AI research and participated in leadership seminars."
+      "Supported club initiatives, helped expand membership engagement, and coordinated technical workshops."
   },
   {
-    role: "Event Coordinator",
-    org: "Rutgers South Asian Student Association",
-    period: "2023 – Present",
+    icon: "🤝",
+    role: "Management Team Member",
+    org: "National Service Scheme, SBSSU",
+    period: "May 2022 – Dec 2022",
     description:
-      "Organized cultural events for 200+ attendees. Managed logistics, volunteers, and partnerships."
+      "Coordinated community service projects and social impact initiatives, managing volunteer teams and project timelines."
   },
   {
-    role: "Volunteer Tutor",
-    org: "Community Learning Center",
-    period: "2023 – Present",
+    icon: "💰",
+    role: "Treasure Team Member",
+    org: "Compuwave Society, SBSSU",
+    period: "Jan 2022 – Dec 2022",
     description:
-      "Tutoring underprivileged students in mathematics and computer science fundamentals."
+      "Managed financial operations and budget planning for technical events, ensuring proper allocation of resources."
   }
 ]
 
@@ -102,7 +89,7 @@ export const experiencePageCopy = {
   title: "Experience",
   subtitle: "Professional journey and leadership roles that shaped my career",
   workLabel: "Professional Experience",
-  leadershipLabel: "Leadership & Involvement",
+  leadershipLabel: "Leadership & Volunteering",
   skillsDevelopedLabel: "Skills Developed"
 }
 
@@ -116,11 +103,11 @@ export const metrics = [
 export const skillsDeveloped = [
   {
     title: "Technical Skills",
-    skills: ["Data Analysis", "Inventory Systems", "Process Digitization", "Supply Chain", "Healthcare IT"]
+    skills: ["Java", "Python", "SQL", "MVC Architecture", "REST APIs", "Statistical Data Analysis"]
   },
   {
     title: "Leadership Skills",
-    skills: ["Team Management", "Project Coordination", "Strategic Planning", "Mentoring", "Event Organization"]
+    skills: ["Mentoring", "Team Management", "Project Coordination", "Event Organization", "Agile Methodologies"]
   },
   {
     title: "Soft Skills",

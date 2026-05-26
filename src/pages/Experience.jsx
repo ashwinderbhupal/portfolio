@@ -127,6 +127,11 @@ const Experience = () => {
             {leadership.map((role, i) => (
               <ScrollReveal key={`${role.role}-${role.org}`} delay={i * 80}>
                 <article className="card card-glass card-featured">
+                  {role.icon && (
+                    <span className="leadership-icon" aria-hidden="true">
+                      {role.icon}
+                    </span>
+                  )}
                   <h3 className="leadership-role">{role.role}</h3>
                   <p className="leadership-org">{role.org}</p>
                   <p className="leadership-period">{role.period}</p>

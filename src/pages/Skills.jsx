@@ -68,17 +68,35 @@ const Skills = () => {
             </div>
           </ScrollReveal>
           <div className="certs-grid">
-            {certifications.map((cert, i) => (
-              <ScrollReveal key={`${cert.name}-${cert.issuer}`} delay={(i % 3) * 60}>
-                <article className="cert-card">
+            {certifications.map((cert, i) => {
+              const card = (
+                <>
                   <div className="cert-header">
                     <span className="cert-issuer-badge">{cert.issuer}</span>
-                    <span className="cert-year-badge">{cert.year}</span>
+                    {cert.year ? <span className="cert-year-badge">{cert.year}</span> : null}
                   </div>
                   <h3 className="cert-name">{cert.name}</h3>
-                </article>
-              </ScrollReveal>
-            ))}
+                  {cert.url ? <span className="cert-link-label">View credential</span> : null}
+                </>
+              )
+
+              return (
+                <ScrollReveal key={`${cert.name}-${cert.issuer}`} delay={(i % 3) * 60}>
+                  {cert.url ? (
+                    <a
+                      className="cert-card cert-card-link"
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {card}
+                    </a>
+                  ) : (
+                    <article className="cert-card">{card}</article>
+                  )}
+                </ScrollReveal>
+              )
+            })}
           </div>
         </div>
       </section>

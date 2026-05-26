@@ -20,13 +20,13 @@ export const personal = {
   bio: "Computer Science student at Rutgers University and Princeton Transfer Scholar, passionate about building software that solves real problems. From AI research to full-stack applications, I turn ideas into impactful technology.",
   email: "Ashwinderbhupal6@gmail.com",
   github: "https://github.com/ashwinderbhupal",
-  linkedin: "https://linkedin.com/in/ashwinder-singh-5b1220206",
+  linkedin: "https://www.linkedin.com/in/ashwinderbhupal/",
   resume: "/Resume/Ashwinder_Bhupal.pdf",
   location: "New Jersey, USA",
   stats: [
     { value: "3.7", label: "GPA" },
     { value: "9+", label: "Projects" },
-    { value: "12+", label: "Certifications" },
+    { value: "16+", label: "Certifications" },
     { value: "3", label: "Hackathons" }
   ],
   availabilityLabel: "Available for opportunities",
@@ -106,7 +106,7 @@ export const personal = {
       "I'm currently open to internship opportunities, research collaborations, and interesting projects. Let's connect.",
     formSuccess:
       "Thanks for reaching out! I'll get back to you soon.",
-    linkedinHandle: "ashwinder-singh",
+    linkedinHandle: "ashwinderbhupal",
     githubHandle: "ashwinderbhupal"
   }
 }

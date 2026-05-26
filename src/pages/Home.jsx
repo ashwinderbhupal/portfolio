@@ -131,14 +131,16 @@ const Home = () => {
                       loading="lazy"
                     />
                     <div className="project-card-image-overlay">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-card-overlay-btn"
-                      >
-                        GitHub
-                      </a>
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-card-overlay-btn"
+                        >
+                          GitHub
+                        </a>
+                      )}
                       {project.demo && (
                         <a
                           href={project.demo}
@@ -146,7 +148,7 @@ const Home = () => {
                           rel="noopener noreferrer"
                           className="project-card-overlay-btn"
                         >
-                          Live Demo
+                          {project.demoLabel || 'Live Demo'}
                         </a>
                       )}
                     </div>
@@ -162,14 +164,16 @@ const Home = () => {
                     <h3 className="project-card-title">{project.title}</h3>
                     <p className="project-card-desc">{project.description}</p>
                     <div className="project-card-links">
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-link"
-                      >
-                        GitHub
-                      </a>
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-link"
+                        >
+                          GitHub
+                        </a>
+                      )}
                       {project.demo && (
                         <a
                           href={project.demo}
@@ -177,7 +181,7 @@ const Home = () => {
                           rel="noopener noreferrer"
                           className="text-link"
                         >
-                          Live Demo
+                          {project.demoLabel || 'Live Demo'}
                         </a>
                       )}
                       <span className="project-card-arrow" aria-hidden="true">→</span>

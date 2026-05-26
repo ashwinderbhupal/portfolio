@@ -1,3 +1,5 @@
+const GITHUB = "https://github.com/ashwinderbhupal"
+
 export const projects = [
   {
     id: 10,
@@ -8,7 +10,7 @@ export const projects = [
     category: "Web Development",
     featured: true,
     year: "2025",
-    github: "https://github.com/ashwinderbhupal",
+    github: `${GITHUB}/ai-code-reviewer`,
     demo: null,
     image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80"
   },
@@ -21,8 +23,8 @@ export const projects = [
     category: "Web Development",
     featured: true,
     year: "2025",
-    github: "https://github.com/ashwinderbhupal",
-    demo: "https://findjob4me.com",
+    github: null,
+    demo: "https://findjob4me.vercel.app/",
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80"
   },
   {
@@ -34,8 +36,9 @@ export const projects = [
     category: "Web Development",
     featured: true,
     year: "2025",
-    github: "https://github.com/ashwinderbhupal",
-    demo: null,
+    github: `${GITHUB}/OIBSIP_JavaDevelopment_5`,
+    demo: "https://youtu.be/K4wSn0WNYqk",
+    demoLabel: "Video",
     image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80"
   },
   {
@@ -47,8 +50,9 @@ export const projects = [
     category: "Web Development",
     featured: true,
     year: "2024",
-    github: "https://github.com/ashwinderbhupal",
-    demo: null,
+    github: `${GITHUB}/Railway-booking-System`,
+    demo: "https://youtu.be/Ff84xtFbzAQ?si=uXTPAaT-4vOtwZVk",
+    demoLabel: "Video",
     image: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80"
   },
   {
@@ -60,9 +64,25 @@ export const projects = [
     category: "AI/ML Research",
     featured: true,
     year: "2025",
-    github: "https://github.com/ashwinderbhupal",
-    demo: null,
+    github: null,
+    demo:
+      "https://www.researchgate.net/publication/405077392_LSTM-Based_Animal_Behavior_Classification_Using_Pose_Keypoints",
+    demoLabel: "Publication",
     image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80"
+  },
+  {
+    id: 11,
+    title: "Predicting Data Science Salaries",
+    description:
+      "CS439 capstone analyzing compensation in the data science job market — identifies key salary drivers (experience, location, remote work, company size) and builds predictive models to help job seekers and employers make data-informed decisions. Includes EDA, feature importance analysis, and model evaluation in Jupyter.",
+    tags: ["Python", "Jupyter", "Pandas", "Scikit-learn", "EDA", "Machine Learning"],
+    category: "AI/ML Research",
+    featured: true,
+    year: "2025",
+    github: `${GITHUB}/CS439-Project`,
+    demo: "https://www.youtube.com/watch?v=INttq71g3sY",
+    demoLabel: "Video",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
   },
   {
     id: 5,
@@ -73,7 +93,7 @@ export const projects = [
     category: "Web Development",
     featured: true,
     year: "2024",
-    github: "https://github.com/ashwinderbhupal",
+    github: `${GITHUB}/FinalHACKTCNJ`,
     demo: null,
     image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
   },
@@ -86,8 +106,9 @@ export const projects = [
     category: "Web Development",
     year: "2025",
     featured: false,
-    github: "https://github.com/ashwinderbhupal",
-    demo: null,
+    github: `${GITHUB}/OIBSIP_JavaDevelopment_3`,
+    demo: "https://youtu.be/g9_R8GXpiLs",
+    demoLabel: "Video",
     image: "https://images.unsplash.com/photo-1601597111158-2fceff292cdc?w=800&q=80"
   },
   {
@@ -99,7 +120,7 @@ export const projects = [
     category: "Web Development",
     year: "2024",
     featured: false,
-    github: "https://github.com/ashwinderbhupal",
+    github: `${GITHUB}/team6_NJITHackathon`,
     demo: null,
     image: "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&q=80"
   },
@@ -112,8 +133,10 @@ export const projects = [
     category: "Research",
     year: "2024",
     featured: false,
-    github: "https://github.com/ashwinderbhupal",
-    demo: null,
+    github: null,
+    demo:
+      "https://www.linkedin.com/in/ashwinderbhupal/overlay/Project/598239208/treasury/?profileId=ACoAADRbnVUBZiNEHBmmCQ0747XNEvHdtbUuRnk",
+    demoLabel: "View Project",
     image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80"
   },
   {
@@ -125,7 +148,7 @@ export const projects = [
     category: "Web Development",
     year: "2025",
     featured: false,
-    github: "https://github.com/ashwinderbhupal/portfolio",
+    github: `${GITHUB}/portfolio`,
     demo: "https://ashwinderbhupal.com",
     image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80"
   }

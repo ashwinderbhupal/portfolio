@@ -106,14 +106,16 @@ const Projects = () => {
                         <span className="project-featured-badge">Featured</span>
                       )}
                       <div className="project-card-image-overlay">
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="project-card-overlay-btn"
-                        >
-                          GitHub
-                        </a>
+                        {project.github && (
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="project-card-overlay-btn"
+                          >
+                            GitHub
+                          </a>
+                        )}
                         {project.demo && (
                           <a
                             href={project.demo}
@@ -121,7 +123,7 @@ const Projects = () => {
                             rel="noopener noreferrer"
                             className="project-card-overlay-btn"
                           >
-                            Demo
+                            {project.demoLabel || 'Demo'}
                           </a>
                         )}
                       </div>
@@ -142,26 +144,26 @@ const Projects = () => {
                       <div className="project-card-meta">
                         <span>{project.year}</span>
                         <span>
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-link"
-                          >
-                            GitHub
-                          </a>
+                          {project.github && (
+                            <a
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-link"
+                            >
+                              GitHub
+                            </a>
+                          )}
+                          {project.github && project.demo && ' · '}
                           {project.demo && (
-                            <>
-                              {' · '}
-                              <a
-                                href={project.demo}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-link"
-                              >
-                                Demo
-                              </a>
-                            </>
+                            <a
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-link"
+                            >
+                              {project.demoLabel || 'Demo'}
+                            </a>
                           )}
                         </span>
                       </div>
